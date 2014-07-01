@@ -1,0 +1,223 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>OMERO.biobank: client installation guide &mdash; Biobank 0.6.0_dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6.0_dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Biobank 0.6.0_dev documentation" href="../index.html" />
+    <link rel="up" title="OMERO.biobank installation guides" href="index.html" />
+    <link rel="next" title="Handling genotyping data" href="../genotyping.html" />
+    <link rel="prev" title="OMERO.biobank: server installation guide" href="server.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../genotyping.html" title="Handling genotyping data"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="server.html" title="OMERO.biobank: server installation guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">OMERO.biobank installation guides</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">OMERO.biobank: client installation guide</a><ul>
+<li><a class="reference internal" href="#software-dependencies">Software dependencies</a><ul>
+<li><a class="reference internal" href="#common-dependencies">Common dependencies</a></li>
+<li><a class="reference internal" href="#with-neo4j-and-rabbitmq-enabled">With Neo4j and RabbitMQ enabled</a></li>
+<li><a class="reference internal" href="#with-neo4j-and-rabbitmq-disabled">With Neo4j and RabbitMQ disabled</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="server.html"
+                        title="previous chapter">OMERO.biobank: server installation guide</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../genotyping.html"
+                        title="next chapter">Handling genotyping data</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/installation/lib.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="omero-biobank-client-installation-guide">
+<h1>OMERO.biobank: client installation guide<a class="headerlink" href="#omero-biobank-client-installation-guide" title="Permalink to this headline">¶</a></h1>
+<p>This page will show how to install OMERO.biobank client API</p>
+<div class="section" id="software-dependencies">
+<h2>Software dependencies<a class="headerlink" href="#software-dependencies" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="common-dependencies">
+<h3>Common dependencies<a class="headerlink" href="#common-dependencies" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Python 2.7</p>
+</li>
+<li><p class="first">OMERO Python libraries (with compiled custom models). Check out the
+OMERO server installation guide for a complete walkthrough on how to
+build OMERO server with custom models. After installation, add the
+Python libraries to your PYTHONPATH:
+export PYTHONPATH=&#8221;${OMERO_HOME}/dist/lib/python:${PYTHONPATH}&#8221;</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://www.zeroc.com">Ice</a> 3.3 or 3.4 Python libraries.</p>
+</li>
+<li><p class="first"><strong>NOTE:</strong> all clients must use the same Ice version as the server</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://www.numpy.org">NumPy</a></p>
+</li>
+<li><p class="first"><a class="reference external" href="https://github.com/crs4/biodoop-core">biodoop-core</a></p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>NOTE:</strong> although <a class="reference external" href="http://pydoop.sourceforge.net">Pydoop</a> is</dt>
+<dd><p class="first last">listed as one of Biodoop Core&#8217;s prerequisites, it&#8217;s only a run-time
+dependency for MapReduce applications. Thus, Pydoop is currently
+<strong>NOT</strong> a requirement for OMERO.biobank.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="with-neo4j-and-rabbitmq-enabled">
+<h3>With Neo4j and RabbitMQ enabled<a class="headerlink" href="#with-neo4j-and-rabbitmq-enabled" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="http://pika.readthedocs.org">pika</a> 0.9.13</li>
+</ul>
+<div class="highlight-python"><pre>pip install pika==0.9.13</pre>
+</div>
+<ul class="simple">
+<li><a class="reference external" href="http://bulbflow.com">bulbs</a> &gt;= 0.3</li>
+</ul>
+<div class="highlight-python"><pre>pip install bulbs</pre>
+</div>
+<ul class="simple">
+<li><a class="reference external" href="https://pypi.python.org/pypi/voluptuous">voluptuous</a> &gt;= 0.7.1</li>
+</ul>
+<div class="highlight-python"><pre>pip install voluptuous</pre>
+</div>
+</div>
+<div class="section" id="with-neo4j-and-rabbitmq-disabled">
+<h3>With Neo4j and RabbitMQ disabled<a class="headerlink" href="#with-neo4j-and-rabbitmq-disabled" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="https://code.google.com/p/python-graph">pygraph</a> &gt;= 1.8.0</li>
+</ul>
+<div class="highlight-python"><pre>easy\_install python-graph-core</pre>
+</div>
+</div>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>Configuration parameters related to Neo4j and RabbitMQ must be retrieved
+from the OMERO server:</p>
+<pre>
+$python {BIOBANK_REPO}/build_configuration.py -H ${OMERO_HOST} -U ${OMERO_USER} -P ${OMERO_PASSWD} --python
+</pre><p>where:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">${OMERO_USER}</span></tt> must be a user with admin privileges in the OMERO
+server</li>
+<li>the <tt class="docutils literal"><span class="pre">--python</span></tt> flag sets the <tt class="docutils literal"><span class="pre">${BIOBANK_REPO}/bl/vl/kb/config.py</span></tt>
+as output for the script: in this way, Neo4j and RabbitMQ config
+values will be installed while installing the libraries.</li>
+</ul>
+<p>If you want to interact with more than one OMERO server, use
+<tt class="docutils literal"><span class="pre">--profile</span></tt> instead of <tt class="docutils literal"><span class="pre">--python</span></tt>: the script will produce an
+<tt class="docutils literal"><span class="pre">${OMERO_HOST}.profile</span></tt> file that can be sourced to load config values
+as environment variables.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>System-wide:</p>
+<pre>
+sudo ${BIOBANK_REPO}/setup.py install
+</pre><p>Local (i.e., into <tt class="docutils literal"><span class="pre">~/.local/lib/python2.7/site-packages</span></tt>):</p>
+<pre>
+${BIOBANK_REPO}/setup.py install --user
+</pre></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../genotyping.html" title="Handling genotyping data"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="server.html" title="OMERO.biobank: server installation guide"
+             >previous</a> |</li>
+        <li><a href="../index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li>
+          <li><a href="index.html" >OMERO.biobank installation guides</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, CRS4.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

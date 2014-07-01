@@ -1,0 +1,145 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Handling genotyping data &mdash; Biobank 0.6.0_dev documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.6.0_dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Biobank 0.6.0_dev documentation" href="index.html" />
+    <link rel="next" title="Tools Usage" href="usage/index.html" />
+    <link rel="prev" title="OMERO.biobank: client installation guide" href="installation/lib.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="usage/index.html" title="Tools Usage"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation/lib.html" title="OMERO.biobank: client installation guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation/lib.html"
+                        title="previous chapter">OMERO.biobank: client installation guide</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="usage/index.html"
+                        title="next chapter">Tools Usage</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/genotyping.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="handling-genotyping-data">
+<h1>Handling genotyping data<a class="headerlink" href="#handling-genotyping-data" title="Permalink to this headline">¶</a></h1>
+<p>One of OMERO.biobank&#8217;s goals is to provide a clean and efficient way
+to handle genotyping data, both &#8220;raw&#8221; (e.g., Affymetrix CEL files) and
+&#8220;processed&#8221; (e.g., genotype calls (GCs), imputations).</p>
+<p>GCs for an individual are stored as a Genotype Data Object (GDO),
+which consists of:</p>
+<ul class="simple">
+<li>a 2 by N array with the probabilities of the AA and BB states;</li>
+<li>a 1 by N array with the corresponding confidence levels;</li>
+</ul>
+<p>where N is the number of Single Nucleotide Polymorphism (SNP) markers
+for the specific genotyping technology used for the assay. This
+representation is used in lieu of the usual two-bits-per-SNP encoding
+to provide a uniform description for both measured and interpolated
+genotypes.  Marker information is currently stored in <a class="reference external" href="https://www.openmicroscopy.org/site/support/omero4/developers/Tables.html">OMERO tables</a>,
+where each row corresponds to a marker.</p>
+<p>Typical operations on genotyping data include:</p>
+<ul class="simple">
+<li>column-wise (per-SNP) statistics: use call values for the same SNP
+across all GDOs in a given set to compute SNP-specific values, e.g.,
+Minimum Allele Frequency (MAF) or Hardy-Weinberg Equilibrium (HWE).</li>
+<li>row-wise (per-GDO) statistics: use call values for all SNPs in a
+GDO, e.g., to count the number of heterozygous SNPs.</li>
+<li>GDO group statistics: use a set of GDOs to compute quantities that
+require looking at the same time in both the row and column
+directions, e.g., to compute the Hamming distance between pairs of
+GDOs or perform SNP imputation.</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="usage/index.html" title="Tools Usage"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation/lib.html" title="OMERO.biobank: client installation guide"
+             >previous</a> |</li>
+        <li><a href="index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, CRS4.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

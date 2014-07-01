@@ -1,0 +1,192 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Biobank and OMERO &mdash; Biobank 0.6.0_dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6.0_dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Biobank 0.6.0_dev documentation" href="../index.html" />
+    <link rel="up" title="Developer’s manual" href="index.html" />
+    <link rel="next" title="API reference" href="api_ref.html" />
+    <link rel="prev" title="Developer’s manual" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_ref.html" title="API reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Developer’s manual"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer&#8217;s manual</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Developer&#8217;s manual</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api_ref.html"
+                        title="next chapter">API reference</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/dev_manual/omero.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="biobank-and-omero">
+<h1>Biobank and OMERO<a class="headerlink" href="#biobank-and-omero" title="Permalink to this headline">¶</a></h1>
+<p>Our modified version of OMERO makes extensive use of OMERO tables to
+handle genotyping-related information:</p>
+<ul class="simple">
+<li>marker definitions;</li>
+<li>alignments of markers to reference genomes;</li>
+<li>marker sets for different genotyping technologies;</li>
+<li>genotype call data.</li>
+</ul>
+<p>This approach allows to homogeneously handle data coming from
+different technologies, from Affymetrix genotyping chips to SNP calls
+based upon high-throughput deep sequencing. It also allows to
+efficiently process such data to extract standard quality control
+measures such as the Minor Allele Frequency (MAF).</p>
+<p>OMERO core services are complemented by support Python modules that
+export data as application-specific formats. For instance, input data
+files for pedigree analysis tools are built on the fly, parametrized
+by a specific set of chosen individuals, marker subset and relevant
+phenotypes.</p>
+<p>OMERO is directly responsible for the management of all available
+metadata, while specific large-scale computation is performed as
+three-step process:</p>
+<ol class="arabic simple">
+<li>query OMERO for job-specific parameters;</li>
+<li>perform the computation proper;</li>
+<li>if the above was successful, store meta-information on the results in OMERO.</li>
+</ol>
+<p>This results in a high degree of decoupling between the OMERO backend
+and the application domain, which allows to develop computational
+software packages (e.g., MapReduce programs for GWAS <a class="footnote-reference" href="#chipal" id="id1">[1]</a>,
+sequence alignment tools <a class="footnote-reference" href="#seal" id="id2">[2]</a>) that can be OMERO-agnostic &#8211;
+at the expense of the metadata management features.</p>
+<p>The problem of efficient metadata management is not limited to large
+dataset analysis: it also affects computationally intensive
+problems. For instance, an important component of the computational
+support for GWAS studies is the interpolation or extrapolation of
+experimental genotyping data to combine results across different
+studies. This process &#8211; imputing missing genotypes for a set of
+individuals by using information on their relatives <a class="footnote-reference" href="#imputation" id="id3">[3]</a> &#8211;
+takes advantage of different genotyping platforms and increases the
+overall statistical power with respect to single-technology scans.</p>
+<p>The duration of a single imputation run depends strongly &#8211; from
+minutes to weeks on the average machine &#8211; on the complexity of the
+family tree structure. Thus, the efficient distribution and monitoring
+of jobs becomes crucial. Processing metadata and setting up a
+calculation with OMERO takes minutes at most, whereas directly reading
+metadata from the raw data files may take many hours. This is
+particularly important when such calculations are run on shared
+computational resources or on fee-based resources in the cloud.</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="chipal" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>S. Leo et al., <em>Efficient computing of genotype calling
+for GWAS</em>. Poster &#8211; 12th International Congress of Human Genetics
+(ICHG) &#8211; October 2011</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="seal" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>L. Pireddu et al., <em>SEAL: a distributed short read mapping
+and duplicate removal tool</em>. Bioinformatics 27(15):2159&#8211;2160, 2011.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="imputation" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Li et al., <em>Genotype Imputation</em>. Annual Review of
+Genomics and Human Genetics 10:387&#8211;406, 2009.</td></tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_ref.html" title="API reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Developer’s manual"
+             >previous</a> |</li>
+        <li><a href="../index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li>
+          <li><a href="index.html" >Developer&#8217;s manual</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, CRS4.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

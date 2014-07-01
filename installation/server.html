@@ -1,0 +1,353 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>OMERO.biobank: server installation guide &mdash; Biobank 0.6.0_dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6.0_dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Biobank 0.6.0_dev documentation" href="../index.html" />
+    <link rel="up" title="OMERO.biobank installation guides" href="index.html" />
+    <link rel="next" title="OMERO.biobank: client installation guide" href="lib.html" />
+    <link rel="prev" title="OMERO.biobank installation guides" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lib.html" title="OMERO.biobank: client installation guide"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="OMERO.biobank installation guides"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">OMERO.biobank installation guides</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">OMERO.biobank: server installation guide</a><ul>
+<li><a class="reference internal" href="#software-dependencies">Software dependencies</a></li>
+<li><a class="reference internal" href="#getting-the-source-code">Getting the source code</a></li>
+<li><a class="reference internal" href="#setting-up-the-database">Setting up the database</a></li>
+<li><a class="reference internal" href="#deploying-the-custom-biobank-models">Deploying the custom Biobank models</a></li>
+<li><a class="reference internal" href="#configuring-the-server">Configuring the server</a><ul>
+<li><a class="reference internal" href="#database-connection">Database connection</a></li>
+<li><a class="reference internal" href="#omero-data-directory">OMERO data directory</a></li>
+<li><a class="reference internal" href="#patching-the-omero-version">Patching the OMERO version</a></li>
+<li><a class="reference internal" href="#increasing-the-amount-of-memory-allocated-to-the-blitz-process">Increasing the amount of memory allocated to the Blitz process</a></li>
+<li><a class="reference internal" href="#increasing-the-maximum-size-of-ice-messages">Increasing the maximum size of Ice messages</a></li>
+<li><a class="reference internal" href="#graph-db-and-message-engines">Graph DB and Message engines</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#building-the-server-and-the-db-schema">Building the server and the DB schema</a></li>
+<li><a class="reference internal" href="#starting-the-server">Starting the server</a><ul>
+<li><a class="reference internal" href="#starting-the-graph-manager">Starting the graph manager</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">OMERO.biobank installation guides</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lib.html"
+                        title="next chapter">OMERO.biobank: client installation guide</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/installation/server.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="omero-biobank-server-installation-guide">
+<h1>OMERO.biobank: server installation guide<a class="headerlink" href="#omero-biobank-server-installation-guide" title="Permalink to this headline">¶</a></h1>
+<p>This page will show how to install the OMERO.biobank server</p>
+<div class="section" id="software-dependencies">
+<h2>Software dependencies<a class="headerlink" href="#software-dependencies" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Oracle
+JDK</a>
+&gt;= 1.5</li>
+<li><a class="reference external" href="http://www.zeroc.com/">Ice</a> 3.3 or 3.4 (version 3.4 is highly
+recommended)</li>
+<li>make sure you install both Java and Python libraries when installing
+Ice</li>
+<li><a class="reference external" href="http://www.numpy.org">Numpy</a></li>
+<li><a class="reference external" href="https://pypi.python.org/pypi/tables">PyTables</a> to enable
+<a class="reference external" href="http://www.openmicroscopy.org/site/support/omero4/developers/Tables.html">OMERO.tables</a></li>
+</ul>
+</div>
+<div class="section" id="getting-the-source-code">
+<h2>Getting the source code<a class="headerlink" href="#getting-the-source-code" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><pre>git clone --recursive git://github.com/openmicroscopy/openmicroscopy.git</pre>
+</div>
+<p>switch to the master branch:</p>
+<div class="highlight-python"><pre>cd ${OMERO_HOME}
+git checkout master</pre>
+</div>
+<p>The master branch will usually correspond to the latest stable OMERO
+release. If you need a specific release, you can switch to it by using
+the following command:</p>
+<div class="highlight-python"><pre>git reset --hard ${VERSION}</pre>
+</div>
+<p>To check all available versions:</p>
+<div class="highlight-python"><pre>git tag -l</pre>
+</div>
+<p>Finally, update the submodules:</p>
+<div class="highlight-python"><pre>git submodule update</pre>
+</div>
+</div>
+<div class="section" id="setting-up-the-database">
+<h2>Setting up the database<a class="headerlink" href="#setting-up-the-database" title="Permalink to this headline">¶</a></h2>
+<p>Refer to the <a class="reference external" href="http://www.openmicroscopy.org/site/support/omero4/sysadmins/unix/server-installation.html#creating-a-database-as-root">official
+documentation</a></p>
+</div>
+<div class="section" id="deploying-the-custom-biobank-models">
+<h2>Deploying the custom Biobank models<a class="headerlink" href="#deploying-the-custom-biobank-models" title="Permalink to this headline">¶</a></h2>
+<p>Check out the OMERO.biobank source code:</p>
+<div class="highlight-python"><pre>git clone https://github.com/crs4/omero.biobank.git</pre>
+</div>
+<p>and copy the custom model files to OMERO&#8217;s model repository</p>
+<div class="highlight-python"><pre>cp ${BIOBANK_REPO}/models/*.ome.xml ${OMERO_HOME}/components/model/resources/mappings/</pre>
+</div>
+</div>
+<div class="section" id="configuring-the-server">
+<h2>Configuring the server<a class="headerlink" href="#configuring-the-server" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="database-connection">
+<h3>Database connection<a class="headerlink" href="#database-connection" title="Permalink to this headline">¶</a></h3>
+<p>Edit the <tt class="docutils literal"><span class="pre">${OMERO_HOME}/etc/omero.properties</span></tt> file:</p>
+<div class="highlight-python"><pre>omero.db.host=${POSTGRESQL_HOST}
+omero.db.name=${OMERO_DB_NAME}
+omero.db.user=${OMERO_DB_USER}
+omero.db.pass=${OMERO_DB_PASSWD}</pre>
+</div>
+</div>
+<div class="section" id="omero-data-directory">
+<h3>OMERO data directory<a class="headerlink" href="#omero-data-directory" title="Permalink to this headline">¶</a></h3>
+<p>You can set the OMERO data directory in
+<tt class="docutils literal"><span class="pre">${OMERO_HOME}/etc/omero.properties</span></tt>, <strong>but this works only as a
+reminder</strong>. We will soon show how to configure it through the admin
+shell.</p>
+</div>
+<div class="section" id="patching-the-omero-version">
+<h3>Patching the OMERO version<a class="headerlink" href="#patching-the-omero-version" title="Permalink to this headline">¶</a></h3>
+<p>Since OMERO.biobank runs on a modified version of OMERO that uses custom
+models, a specific tag must be added to the <tt class="docutils literal"><span class="pre">omero.version</span></tt> property.
+This allows to perform a version check to ensure that the OMERO server
+supports the specific set of models used by the client. To apply the
+patch, run:</p>
+<div class="highlight-python"><pre>./utils/patch_ome_config --ome-home ${OMERO_HOME} --models-repository ${MODELS_REPOSITORY}</pre>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">${MODELS_REPOSITORY}</span></tt> can be the <tt class="docutils literal"><span class="pre">models</span></tt> directory of the
+repository.</p>
+</div>
+<div class="section" id="increasing-the-amount-of-memory-allocated-to-the-blitz-process">
+<h3>Increasing the amount of memory allocated to the Blitz process<a class="headerlink" href="#increasing-the-amount-of-memory-allocated-to-the-blitz-process" title="Permalink to this headline">¶</a></h3>
+<p>In order to handle large datasets, you may need to increase the memory
+assigned to the Blitz process. Open
+<tt class="docutils literal"><span class="pre">${OMERO_HOME}/etc/grid/templates.xml</span></tt> with a text editor, look for
+the <tt class="docutils literal"><span class="pre">&lt;server-template</span> <span class="pre">id=&quot;BlitzTemplate&quot;&gt;</span></tt> tag and edit the following
+lines:</p>
+<div class="highlight-python"><pre>&lt;server-template id="BlitzTemplate"&gt;
+...
+    &lt;target name="Blitz-hprof"&gt;
+    ...
+    &lt;/target&gt;
+    &lt;option&gt;-Xmx${MAX_BLITZ_MEM_IN_MB}M&lt;/option&gt;
+    &lt;option&gt;-XX:MaxPermSize=${MAX_PERM_SIZE_IN_MB}m&lt;/option&gt;
+...</pre>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">MaxPermSize</span></tt> parameter is required by Hibernate and represents an
+extra amount of memory that will be assigned to the Blitz server.</p>
+</div>
+<div class="section" id="increasing-the-maximum-size-of-ice-messages">
+<h3>Increasing the maximum size of Ice messages<a class="headerlink" href="#increasing-the-maximum-size-of-ice-messages" title="Permalink to this headline">¶</a></h3>
+<p>To handle large results from a single query, you need to increase Ice&#8217;s
+maximum message size.</p>
+<p>In <tt class="docutils literal"><span class="pre">${OMERO_HOME}/components/blitz/resources/omero/Constants.ice</span></tt>,
+set:</p>
+<div class="highlight-python"><pre>const int MESSAGESIZEMAX = ${MAX_MESSAGE_SIZE_IN_MB};</pre>
+</div>
+<p>In <tt class="docutils literal"><span class="pre">${OMERO_HOME}/etc/ice.config</span></tt>:</p>
+<div class="highlight-python"><pre>Ice.MessageSizeMax=${MAX_MESSAGE_SIZE_IN_MB}</pre>
+</div>
+<p>In <tt class="docutils literal"><span class="pre">${OMERO_HOME}/etc/grid/templates.xml</span></tt>:</p>
+<div class="highlight-python"><pre>&lt;properties id="Basics"&gt;
+  &lt;property name="Ice.MessageSizeMax" value="${MAX_MESSAGE_SIZE_IN_MB}"/&gt;
+  ...
+&lt;/properties&gt;</pre>
+</div>
+</div>
+<div class="section" id="graph-db-and-message-engines">
+<h3>Graph DB and Message engines<a class="headerlink" href="#graph-db-and-message-engines" title="Permalink to this headline">¶</a></h3>
+<p>OMERO.biobank can use a graph DB to take advantage of a more reliable
+and faster lookup engine for the retrieval of the &#8220;chain of custody&#8221; of
+the various objects stored in the system. The libraries also need a
+message engine to synchronize data between the OMERO database and the
+graph DB.</p>
+<p>We use <a class="reference external" href="http://www.neo4j.org">Neo4j</a> as graph DB and
+<a class="reference external" href="http://www.rabbitmq.com">RabbitMQ</a> as message engine. To install
+these tools, refer to the official documentation:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.neo4j.org/download">Neo4j install guide</a></li>
+<li><a class="reference external" href="http://www.rabbitmq.com/download.html">RabbitMQ install guide</a></li>
+</ul>
+<p>Neo4j and RabbitMQ configuration parameters must be set at the end of
+<tt class="docutils literal"><span class="pre">$OMERO_HOME/etc/omero.properties</span></tt> (these values will be retrieved
+when installing the OMERO.biobank API):</p>
+<div class="highlight-python"><pre>...
+omero.biobank.graph.engine=neo4j
+omero.biobank.graph.uri=${NEO4J_SERVER_URI}
+omero.biobank.graph.user=${NEO4J_USER} #optional
+omero.biobank.graph.password=${NEO4J_PASSWORD} #optional
+omero.biobank.messages_queue.enabled=True
+omero.biobank.messages_queue.host=${RABBITMQ_SERVER_HOST}
+omero.biobank.messages_queue.port=${RABBITMQ_SERVER_PORT} #optional
+omero.biobank.messages_queue.queue=${RABBITMQ_QUEUE_NAME}
+omero.biobank.messages_queue.user=${RABBITMQ_USER} #optional
+omero.biobank.messages_queue.password=${RABBITMQ_PASSWORD}  #optional</pre>
+</div>
+<p><strong>NOTE 1</strong>: all variables listed as optional must be set only if you
+change the default Neo4j/RabbitMQ configuration.</p>
+<p><strong>NOTE 2</strong>: to set the above parameters when the server is already
+installed, use the <tt class="docutils literal"><span class="pre">omero</span> <span class="pre">config</span></tt> command (see below)</p>
+<p>If you don&#8217;t want to enable Neo4j and RabbitMQ (e.g., on a test server),
+append the following settings to <tt class="docutils literal"><span class="pre">${OMERO_HOME}/etc/omero.properties</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="n">omero</span><span class="o">.</span><span class="n">biobank</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">engine</span><span class="o">=</span><span class="n">pygraph</span>
+<span class="n">omero</span><span class="o">.</span><span class="n">biobank</span><span class="o">.</span><span class="n">messages_queue</span><span class="o">.</span><span class="n">enabled</span><span class="o">=</span><span class="bp">False</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="building-the-server-and-the-db-schema">
+<h2>Building the server and the DB schema<a class="headerlink" href="#building-the-server-and-the-db-schema" title="Permalink to this headline">¶</a></h2>
+<p>Build the server:</p>
+<div class="highlight-python"><pre>${OMERO_HOME}/build.py</pre>
+</div>
+<p>The build process may fail with the following error:</p>
+<div class="highlight-python"><pre>The system is out of resources.
+Consult the following stack trace for details.
+java.lang.OutOfMemoryError: GC overhead limit exceeded
+[...]</pre>
+</div>
+<p>In this case, open <tt class="docutils literal"><span class="pre">${OME_HOME}/build.py</span></tt> with a text editor and
+increase the the value for <tt class="docutils literal"><span class="pre">-Djavac.maxmem.default</span></tt> in
+<tt class="docutils literal"><span class="pre">calculate_memory_args</span></tt>. For instance:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">calculate_memory_args</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">&quot;-Xmx600M -Djavac.maxmem.default=1024M -Djavadoc.maxmem.default=750M -XX:MaxPermSize=256m&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Build the DB schema from hibernate classes:</p>
+<div class="highlight-python"><pre>${OMERO_HOME}/build.py build-schema -Domero.db.dialect=org.hibernate.dialect.PostgreSQLDialect</pre>
+</div>
+<p>Generate the SQL code to initialize the DB:</p>
+<div class="highlight-python"><pre>${OMERO_HOME}/dist/bin/omero db script</pre>
+</div>
+<p>The above command will prompt for the omero DB version and patch (press
+enter to use the suggested default values) and the root password.</p>
+<p>Deploy the SQL file to the PostgreSQL server:</p>
+<div class="highlight-python"><pre>psql -h ${POSTGRESQL_HOST} -U ${DB_USER} ${DB_NAME} &lt; ${OMERO_SQL_FILE}</pre>
+</div>
+<p>configure the data directory</p>
+<div class="highlight-python"><pre>${OMERO_HOME}/dist/bin/omero config set omero.data.dir ${OMERO_DATA_DIR}</pre>
+</div>
+</div>
+<div class="section" id="starting-the-server">
+<h2>Starting the server<a class="headerlink" href="#starting-the-server" title="Permalink to this headline">¶</a></h2>
+<p>Start the OMERO server with the following command:</p>
+<div class="highlight-python"><pre>${OMERO_HOME}/dist/bin/omero admin start</pre>
+</div>
+<div class="section" id="starting-the-graph-manager">
+<h3>Starting the graph manager<a class="headerlink" href="#starting-the-graph-manager" title="Permalink to this headline">¶</a></h3>
+<p>If you enabled Neo4j, you will also have to start the graph manager, a
+daemon that updates the Neo4j database according to the RabbitMQ queue
+status:</p>
+<div class="highlight-python"><pre>${BIOBANK_HOME}/daemons/graph_manager.py</pre>
+</div>
+<p><strong>NOTE:</strong> to run the daemon, you have to install OMERO.biobank first.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lib.html" title="OMERO.biobank: client installation guide"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="OMERO.biobank installation guides"
+             >previous</a> |</li>
+        <li><a href="../index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li>
+          <li><a href="index.html" >OMERO.biobank installation guides</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, CRS4.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

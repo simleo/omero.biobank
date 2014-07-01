@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Create custom models for OMERO.biobank &mdash; Biobank 0.6.0_dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6.0_dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Biobank 0.6.0_dev documentation" href="../index.html" />
+    <link rel="up" title="Developer’s manual" href="index.html" />
+    <link rel="prev" title="API reference" href="api_ref.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_ref.html" title="API reference"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer&#8217;s manual</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Create custom models for OMERO.biobank</a><ul>
+<li><a class="reference internal" href="#omero-xml-models">OMERO XML models</a><ul>
+<li><a class="reference internal" href="#models-constraints">Models constraints</a></li>
+<li><a class="reference internal" href="#properties-types">Properties’ types</a></li>
+<li><a class="reference internal" href="#omero-biobank-modelling-conventions">OMERO.biobank modelling conventions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#omero-biobank-models-wrapping">OMERO.biobank models wrapping</a><ul>
+<li><a class="reference internal" href="#unique-keys-creation">Unique keys creation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api_ref.html"
+                        title="previous chapter">API reference</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/dev_manual/modelling.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="create-custom-models-for-omero-biobank">
+<h1>Create custom models for OMERO.biobank<a class="headerlink" href="#create-custom-models-for-omero-biobank" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="omero-xml-models">
+<h2>OMERO XML models<a class="headerlink" href="#omero-xml-models" title="Permalink to this headline">¶</a></h2>
+<p>Creating new data models for an OMERO server is quite easy, data
+structures are defined in XML files with a .ome.xml extension stored in
+$OMERO_SERVER_HOME/components/model/resoruces/mappings/ directory.</p>
+<p>OMERO models use XML 1.0 syntax, so each file must begin with the header</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</pre></div>
+</div>
+<p>data structures must be contained between tags</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;types&gt;</span>
+  .....
+  .....
+<span class="nt">&lt;/types&gt;</span>
+</pre></div>
+</div>
+<p>Each model (or data structure) can be a “type” or an “enum”, “type”s can
+be seen as the XML representation of SQL tables, “enum”s are special
+tables with only two columns: an ID and a String value.</p>
+<p>To define an enum just create a model like</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;enum</span> <span class="na">id=</span><span class="s">&quot;ome.model.vl.VesselContent&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;entry</span> <span class="na">name=</span><span class="s">&quot;EMPTY&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;entry</span> <span class="na">name=</span><span class="s">&quot;BLOOD&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;entry</span> <span class="na">name=</span><span class="s">&quot;SERUM&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;entry</span> <span class="na">name=</span><span class="s">&quot;DNA&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;entry</span> <span class="na">name=</span><span class="s">&quot;RNA&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/enum&gt;</span>
+</pre></div>
+</div>
+<p>the ID field of each row will be automatically assigned by the server
+when the model will be deployed.</p>
+<p>To define a type create a model like</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;type</span> <span class="na">id=</span><span class="s">&quot;ome.model.vl.Vessel&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;required</span> <span class="na">name=</span><span class="s">&quot;vid&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span> <span class="na">unique=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;required</span> <span class="na">name=</span><span class="s">&quot;activationDate&quot;</span> <span class="na">type=</span><span class="s">&quot;timestamp&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;optional</span> <span class="na">name=</span><span class="s">&quot;destructionDate&quot;</span> <span class="na">type=</span><span class="s">&quot;timestamp&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;required</span> <span class="na">name=</span><span class="s">&quot;currentVolume&quot;</span> <span class="na">type=</span><span class="s">&quot;float&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;required</span> <span class="na">name=</span><span class="s">&quot;initialVolume&quot;</span> <span class="na">type=</span><span class="s">&quot;float&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;required</span> <span class="na">name=</span><span class="s">&quot;content&quot;</span> <span class="na">type=</span><span class="s">&quot;ome.model.vl.VesselContent&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;required</span> <span class="na">name=</span><span class="s">&quot;status&quot;</span> <span class="na">type=</span><span class="s">&quot;ome.model.vl.VesselStatus&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;required</span> <span class="na">name=</span><span class="s">&quot;action&quot;</span> <span class="na">type=</span><span class="s">&quot;ome.model.vl.Action&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;optional</span> <span class="na">name=</span><span class="s">&quot;lastUpdate&quot;</span> <span class="na">type=</span><span class="s">&quot;ome.model.vl.Action&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/properties&gt;</span>
+<span class="nt">&lt;/type&gt;</span>
+</pre></div>
+</div>
+<p>models can be also extended like classes in Object Oriented programming
+languages</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;type</span> <span class="na">id=</span><span class="s">&quot;ome.model.vl.Tube&quot;</span> <span class="na">superclass=</span><span class="s">&quot;ome.model.vl.Vessel&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;required</span> <span class="na">name=</span><span class="s">&quot;label&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span> <span class="na">unique=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;optional</span> <span class="na">name=</span><span class="s">&quot;barcode&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span> <span class="na">unique=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/properties&gt;</span>
+<span class="nt">&lt;/type&gt;</span>
+</pre></div>
+</div>
+<p>a child model inherits all the parameters of its superclasses but
+cannot override parameters of the superclasses.</p>
+<p>Every model has to start with a</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;type</span> <span class="na">id=</span><span class="s">&quot;...&quot;</span><span class="nt">&gt;</span>
+</pre></div>
+</div>
+<p>tag and all the properties must be enclosed between</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;properties&gt;</span>
+  ....
+  ....
+<span class="nt">&lt;/properties&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="models-constraints">
+<h3>Models constraints<a class="headerlink" href="#models-constraints" title="Permalink to this headline">¶</a></h3>
+<p>Each property must be required or optional, only optional fields can
+have a null value.</p>
+<p>A unique key can be specified by adding the unique=“true” constraint to
+the property, unfortunately OMERO does not allow to specify a
+multi-field unique key (like SQL language does), in order to use such a
+key a new field must be introduced in the model like</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;type</span> <span class="na">id=</span><span class="s">&quot;ome.model.vl.PlateWell&quot;</span> <span class="na">superclass=</span><span class="s">&quot;ome.model.vl.Vessel&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;required</span> <span class="na">name=</span><span class="s">&quot;label&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;required</span> <span class="na">name=</span><span class="s">&quot;slot&quot;</span> <span class="na">type=</span><span class="s">&quot;int&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;required</span> <span class="na">name=</span><span class="s">&quot;container&quot;</span> <span class="na">type=</span><span class="s">&quot;ome.model.vl.TiterPlate&quot;</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!-- container.label, label --&gt;</span>
+    <span class="nt">&lt;required</span> <span class="na">name=</span><span class="s">&quot;containerSlotLabelUK&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span> <span class="na">unique=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!-- container.label, slot --&gt;</span>
+    <span class="nt">&lt;required</span> <span class="na">name=</span><span class="s">&quot;containerSlotIndexUK&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span> <span class="na">unique=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/properties&gt;</span>
+<span class="nt">&lt;/type&gt;</span>
+</pre></div>
+</div>
+<p>the <strong>containerSlotLabelUK</strong> and <strong>containerSlotIndexUK</strong> are two unique
+keys for the PlateWell object, each one is used to combine two different
+fields. In order to make easier to understand which field the key will
+combine, we add a comment with the used fields and the order used to
+combine fields values in order to obtain the key.</p>
+</div>
+<div class="section" id="properties-types">
+<h3>Properties’ types<a class="headerlink" href="#properties-types" title="Permalink to this headline">¶</a></h3>
+<p>Each property of a model can be one of the following types:</p>
+<ul class="simple">
+<li>string</li>
+<li>text</li>
+<li>int</li>
+<li>long</li>
+<li>float</li>
+<li>timestamp</li>
+<li>boolean</li>
+</ul>
+<p>or a model itself. To specify a model as property type just use the
+model ID in the type property. Foreign keys are automatically managed by
+OMERO’s hibernate engine.</p>
+</div>
+<div class="section" id="omero-biobank-modelling-conventions">
+<h3>OMERO.biobank modelling conventions<a class="headerlink" href="#omero-biobank-modelling-conventions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Each model, except for the enumerations, must have a VID attribute.
+The VID is a secondary ID for the object automatically assigned by
+the biobank API that is used as a substitute of the automatically
+assigned OMERO ID.</li>
+<li>Each object that must appear in the “chain of custody system” must
+have an “action” field and a “lastUpdate” field. The action field is
+use to track the object’s source (if the object has not a source the
+action field is used to register that the object as been imported
+without a parent object), the lastUpdate object is used to keep
+trace of all updates occurred to the object itself in order to keep
+trace of the object’s history.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="omero-biobank-models-wrapping">
+<h2>OMERO.biobank models wrapping<a class="headerlink" href="#omero-biobank-models-wrapping" title="Permalink to this headline">¶</a></h2>
+<p>In order to use the new data structures, new models must be wrapped in
+OMERO.biobank. Wrapping a new model is quite simple, a new model only
+has to extend the bl.vl.kb.drivers.omero.wrapper.OmeroWrapper class. All
+modules defining object mappings must be contained in the
+bl.vl.kb.driver.omero package.</p>
+<p>To wrap the above VesselContent enumeration</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">wrapper</span> <span class="kn">as</span> <span class="nn">wp</span>
+
+ <span class="k">class</span> <span class="nc">VesselContent</span><span class="p">(</span><span class="n">wp</span><span class="o">.</span><span class="n">OmeroWrapper</span><span class="p">):</span>
+
+  <span class="n">OME_TABLE</span> <span class="o">=</span> <span class="s">&#39;VesselContent&#39;</span>
+  <span class="n">__enums__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;EMPTY&#39;</span><span class="p">,</span> <span class="s">&#39;BLOOD&#39;</span><span class="p">,</span> <span class="s">&#39;SERUM&#39;</span><span class="p">,</span> <span class="s">&#39;DNA&#39;</span><span class="p">,</span> <span class="s">&#39;RNA&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>where</p>
+<ul class="simple">
+<li>OME_TABLE is the id of the model without the namespace specified
+in the XML file</li>
+<li><em>enums</em> is the list of the strings contained in the enumeration that
+has been wrapped; it is important that the strings of the list match
+the cases of the strings specified in the XML model.</li>
+</ul>
+<p>To wrap the Vessel model above</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">wrapper</span> <span class="kn">as</span> <span class="nn">wp</span>
+<span class="kn">from</span> <span class="nn">Action</span> <span class="kn">import</span> <span class="n">Action</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">assign_vid_and_timestamp</span><span class="p">,</span> <span class="n">assign_vid</span>
+
+<span class="k">class</span> <span class="nc">Vessel</span><span class="p">(</span><span class="n">wp</span><span class="o">.</span><span class="n">OmeroWrapper</span><span class="p">):</span>
+
+  <span class="n">OME_TABLE</span> <span class="o">=</span> <span class="s">&#39;Vessel&#39;</span>
+  <span class="n">__fields__</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;vid&#39;</span><span class="p">,</span>   <span class="n">wp</span><span class="o">.</span><span class="n">VID</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">REQUIRED</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;activationDate&#39;</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">TIMESTAMP</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">REQUIRED</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;destructionDate&#39;</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">TIMESTAMP</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">OPTIONAL</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;currentVolume&#39;</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">FLOAT</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">REQUIRED</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;initialVolume&#39;</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">FLOAT</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">REQUIRED</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;content&#39;</span><span class="p">,</span> <span class="n">VesselContent</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">REQUIRED</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;status&#39;</span><span class="p">,</span> <span class="n">VesselStatus</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">REQUIRED</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;action&#39;</span><span class="p">,</span> <span class="n">Action</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">REQUIRED</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;lastUpdate&#39;</span><span class="p">,</span> <span class="n">Action</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">OPTIONAL</span><span class="p">)]</span>
+
+  <span class="k">def</span> <span class="nf">__preprocess_conf__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;activationDate&#39;</span>  <span class="ow">in</span> <span class="n">conf</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">assign_vid_and_timestamp</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">time_stamp_field</span><span class="o">=</span><span class="s">&#39;activationDate&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">assign_vid</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and to map the PlateWell model that extends the Vessel model</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">wrapper</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">make_unique_key</span>
+
+<span class="k">class</span> <span class="nc">PlateWell</span><span class="p">(</span><span class="n">Vessel</span><span class="p">):</span>
+
+  <span class="n">OME_TABLE</span> <span class="o">=</span> <span class="s">&#39;PlateWell&#39;</span>
+  <span class="n">__fields__</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;label&#39;</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">REQUIRED</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;slot&#39;</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">INT</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">REQUIRED</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;container&#39;</span><span class="p">,</span> <span class="n">TiterPlate</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">REQUIRED</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;containerSlotLabelUK&#39;</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">REQUIRED</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&#39;containerSlotIndexUK&#39;</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">wp</span><span class="o">.</span><span class="n">REQUIRED</span><span class="p">)]</span>
+
+  <span class="k">def</span> <span class="nf">__preprocess_conf__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">PlateWell</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__preprocess_conf__</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;containerSlotLabelUK&#39;</span> <span class="ow">in</span> <span class="n">conf</span><span class="p">:</span>
+      <span class="n">clabel</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s">&#39;container&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span>
+      <span class="n">label</span>   <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">]</span>
+      <span class="n">conf</span><span class="p">[</span><span class="s">&#39;containerSlotLabelUK&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_unique_key</span><span class="p">(</span><span class="n">clabel</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;containerSlotIndexUK&#39;</span> <span class="ow">in</span> <span class="n">conf</span><span class="p">:</span>
+      <span class="n">clabel</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s">&#39;container&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span>
+      <span class="n">slot</span>   <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s">&#39;slot&#39;</span><span class="p">]</span>
+      <span class="n">conf</span><span class="p">[</span><span class="s">&#39;containerSlotIndexUK&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_unique_key</span><span class="p">(</span><span class="n">clabel</span><span class="p">,</span> <span class="s">&#39;</span><span class="si">%04d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">slot</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">conf</span>
+
+  <span class="k">def</span> <span class="nf">__update_constraints__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">csl_uk</span> <span class="o">=</span> <span class="n">make_unique_key</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ome_obj</span><span class="p">,</span> <span class="s">&#39;containerSlotLabelUK&#39;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">to_omero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__fields__</span><span class="p">[</span><span class="s">&#39;containerSlotLabelUK&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">csl_uk</span><span class="p">))</span>
+    <span class="n">csi_uk</span> <span class="o">=</span> <span class="n">make_unique_key</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="s">&#39;</span><span class="si">%04d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">slot</span><span class="p">)</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ome_obj</span><span class="p">,</span> <span class="s">&#39;containerSlotIndexUK&#39;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">to_omero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__fields__</span><span class="p">[</span><span class="s">&#39;containerSlotIndexUK&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">csi_uk</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>in this case we have a list called <em>fields</em> which map all the fields
+specified in the XML model.</p>
+<p>The syntax for element of the list is is</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span> <span class="n">field_label</span><span class="p">,</span> <span class="n">field_type</span><span class="p">,</span> <span class="n">field_constraint</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>where</p>
+<ul class="simple">
+<li>field_label is the string specified in the “name” attribute of the
+field in the XML file</li>
+<li>field_type can be:<ul>
+<li>wp.VID for the VID field</li>
+<li>wp.TIMESTAMP for timestamp fields</li>
+<li>wp.STRING for string fields</li>
+<li>wp.TEXT for text fields</li>
+<li>wp.FLOAT for float fields</li>
+<li>wp.INT for int fields</li>
+<li>wp.LONG for long fields</li>
+<li>wp.BOOLEAN for boolean fields</li>
+<li>a class that extends the OmeroWrapper class if you want to</li>
+</ul>
+</li>
+</ul>
+<p>associate another model to the field</p>
+<ul class="simple">
+<li>field_constraint can be:<ul>
+<li>wp.REQUIRED for required fields</li>
+<li>wp.OPTIONAL for optional fields</li>
+</ul>
+</li>
+</ul>
+<p>OmeroWrapper also defines some functions that are automatically called
+when managing objects that wrap OMERO models:</p>
+<ul class="simple">
+<li>def <tt class="docutils literal"><span class="pre">__preprocess_conf__</span></tt>(self, conf): called when an object is
+created; it is used to automatically assign fields like a timestamp
+or a VID if the field is not specified in the object’s configuration
+or it can be used to validate object’s configuration.</li>
+<li>def <tt class="docutils literal"><span class="pre">__update_constraints__</span></tt>(self): called every time an
+object’s field has been updated; it is used to automatically
+recalculate unique keys constraints.</li>
+<li>def <tt class="docutils literal"><span class="pre">__cleanup__</span></tt>(self): it is called after an objects has been
+deleted; it is used to cleanup OMERO’s database or the graph after
+an object has been successfully deleted. PAY ATTENTION when
+overriding this function because this is the only one with an
+implementation in the OmeroWrapper class and it is used to remove
+nodes and edges from the graph engine when an object or an action
+has been deleted from OMERO.</li>
+</ul>
+<div class="section" id="unique-keys-creation">
+<h3>Unique keys creation<a class="headerlink" href="#unique-keys-creation" title="Permalink to this headline">¶</a></h3>
+<p>In order to make simple and standard the creation of a unique key, a
+make_unique_key function has been defined in the
+bl.vl.utils.ome_utils module; the function takes a list of strings as
+argument, joins them and returns the hash digest of the resulting string
+that will be used as unique key. This function is usually used in the
+<tt class="docutils literal"><span class="pre">__preprocess_conf__</span></tt> and in the <tt class="docutils literal"><span class="pre">__update_constraints__</span></tt> functions
+of the wrapping object. Make sure that, every time the make_unique_key
+function is called, the strings of the input list are passed in the same
+order.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_ref.html" title="API reference"
+             >previous</a> |</li>
+        <li><a href="../index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li>
+          <li><a href="index.html" >Developer&#8217;s manual</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, CRS4.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

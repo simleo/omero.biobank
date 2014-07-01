@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>A collection of examples &mdash; Biobank 0.6.0_dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6.0_dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Biobank 0.6.0_dev documentation" href="../index.html" />
+    <link rel="up" title="A tour of Biobank’s API" href="index.html" />
+    <link rel="next" title="Developer’s manual" href="../dev_manual/index.html" />
+    <link rel="prev" title="Knowledge Base tutorial" href="kb_tutorial.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../dev_manual/index.html" title="Developer’s manual"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="kb_tutorial.html" title="Knowledge Base tutorial"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">A tour of Biobank&#8217;s API</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">A collection of examples</a><ul>
+<li><a class="reference internal" href="#individuals-and-enrollments">Individuals and enrollments</a></li>
+<li><a class="reference internal" href="#markers-and-marker-sets">Markers and marker sets</a></li>
+<li><a class="reference internal" href="#working-on-genomic-data">Working on genomic data</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="kb_tutorial.html"
+                        title="previous chapter">Knowledge Base tutorial</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../dev_manual/index.html"
+                        title="next chapter">Developer&#8217;s manual</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api_tour/examples.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="a-collection-of-examples">
+<span id="kb-examples"></span><h1>A collection of examples<a class="headerlink" href="#a-collection-of-examples" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of these examples is to show how the KB works.  Since they
+are meant to be clear rather than efficient, they should not be used
+for large-scale operations.</p>
+<div class="section" id="individuals-and-enrollments">
+<h2>Individuals and enrollments<a class="headerlink" href="#individuals-and-enrollments" title="Permalink to this headline">¶</a></h2>
+<p>This example shows how to define individuals and enroll them in a
+study.  Open a connection to OMERO through the KB:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">bl.vl.kb</span> <span class="kn">import</span> <span class="n">KnowledgeBase</span> <span class="k">as</span> <span class="n">KB</span>
+
+<span class="n">OME_HOST</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;OME_HOST&#39;</span><span class="p">,</span> <span class="s">&#39;localhost&#39;</span><span class="p">)</span>
+<span class="n">OME_USER</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;OME_USER&#39;</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">)</span>
+<span class="n">OME_PASSWD</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;OME_PASSWD&#39;</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">)</span>
+
+<span class="n">kb</span> <span class="o">=</span> <span class="n">KB</span><span class="p">(</span><span class="n">driver</span><span class="o">=</span><span class="s">&#39;omero&#39;</span><span class="p">)(</span><span class="n">OME_HOST</span><span class="p">,</span> <span class="n">OME_USER</span><span class="p">,</span> <span class="n">OME_PASSWD</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Define the list of individuals:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">individual_defs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c">#label   gender    father  mother</span>
+    <span class="p">(</span><span class="s">&#39;I001&#39;</span><span class="p">,</span> <span class="s">&#39;MALE&#39;</span><span class="p">,</span>    <span class="bp">None</span><span class="p">,</span>   <span class="bp">None</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;I002&#39;</span><span class="p">,</span> <span class="s">&#39;FEMALE&#39;</span><span class="p">,</span>  <span class="bp">None</span><span class="p">,</span>   <span class="bp">None</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;I003&#39;</span><span class="p">,</span> <span class="s">&#39;MALE&#39;</span><span class="p">,</span>   <span class="s">&#39;I001&#39;</span><span class="p">,</span> <span class="s">&#39;I002&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;I004&#39;</span><span class="p">,</span> <span class="s">&#39;FEMALE&#39;</span><span class="p">,</span> <span class="s">&#39;I001&#39;</span><span class="p">,</span> <span class="s">&#39;I002&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;I005&#39;</span><span class="p">,</span> <span class="s">&#39;MALE&#39;</span><span class="p">,</span>   <span class="s">&#39;I003&#39;</span><span class="p">,</span> <span class="s">&#39;I004&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;I006&#39;</span><span class="p">,</span> <span class="s">&#39;MALE&#39;</span><span class="p">,</span>   <span class="s">&#39;I003&#39;</span><span class="p">,</span> <span class="s">&#39;I004&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+</pre></div>
+</div>
+<p>Create a Study instance: in this context, this is used as a way of
+handling groups of individuals.  In the following we will assume that
+the study&#8217;s label has not been assigned to any other existing study.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="s">&#39;KB_EXAMPLES&#39;</span><span class="p">,</span> <span class="s">&#39;description&#39;</span><span class="p">:</span> <span class="s">&#39;dummy&#39;</span><span class="p">}</span>
+<span class="n">study</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">kb</span><span class="o">.</span><span class="n">Study</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>To proceed we need to instantiate an Action object.  In OMERO.biobank,
+actions are used to store information on the chains of events that
+lead to the creation of KB objects.  In their full-blown
+configuration, actions may contain very detailed descriptions of what
+happened; in this example, we will use a shortcut that creates a &#8220;vanilla&#8221;
+action with minimal information:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">action</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">create_an_action</span><span class="p">(</span><span class="n">study</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we can create Individual objects and enroll them in the study:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">gender_map</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;MALE&#39;</span><span class="p">:</span> <span class="n">kb</span><span class="o">.</span><span class="n">Gender</span><span class="o">.</span><span class="n">MALE</span><span class="p">,</span> <span class="s">&#39;FEMALE&#39;</span><span class="p">:</span> <span class="n">kb</span><span class="o">.</span><span class="n">Gender</span><span class="o">.</span><span class="n">FEMALE</span><span class="p">}</span>
+<span class="n">by_label</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">gender</span><span class="p">,</span> <span class="n">father</span><span class="p">,</span> <span class="n">mother</span> <span class="ow">in</span> <span class="n">individual_defs</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;gender&#39;</span><span class="p">:</span> <span class="n">gender_map</span><span class="p">[</span><span class="n">gender</span><span class="p">],</span> <span class="s">&#39;action&#39;</span><span class="p">:</span> <span class="n">action</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">father</span><span class="p">:</span>
+        <span class="n">config</span><span class="p">[</span><span class="s">&#39;father&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">by_label</span><span class="p">[</span><span class="n">father</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">mother</span><span class="p">:</span>
+        <span class="n">config</span><span class="p">[</span><span class="s">&#39;mother&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">by_label</span><span class="p">[</span><span class="n">mother</span><span class="p">]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">kb</span><span class="o">.</span><span class="n">Individual</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">by_label</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;study&#39;</span><span class="p">:</span> <span class="n">study</span><span class="p">,</span> <span class="s">&#39;individual&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span> <span class="s">&#39;studyCode&#39;</span><span class="p">:</span> <span class="n">label</span><span class="p">}</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">kb</span><span class="o">.</span><span class="n">Enrollment</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note that studyCode is the code assigned to each individual in a
+specific study.  We can run a consistency check as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">kb</span><span class="o">.</span><span class="n">get_enrolled</span><span class="p">(</span><span class="n">study</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">e</span><span class="o">.</span><span class="n">individual</span> <span class="o">==</span> <span class="n">by_label</span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">studyCode</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="markers-and-marker-sets">
+<h2>Markers and marker sets<a class="headerlink" href="#markers-and-marker-sets" title="Permalink to this headline">¶</a></h2>
+<p>This example shows how to handle genetic marker data.</p>
+<p><strong>NOTE:</strong> the example assumes that the KB already contains all objects
+created by the example on importing individuals.</p>
+<p>Suppose you have run a series of genotyping assays where the DNA
+sample in each well of a titer plate has been associated to a
+collection of genotyping values.  To import this information into the
+KB, we define a collection of marker data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">bl.vl.kb</span> <span class="kn">import</span> <span class="n">KnowledgeBase</span> <span class="k">as</span> <span class="n">KB</span>
+
+<span class="n">OME_HOST</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;OME_HOST&#39;</span><span class="p">,</span> <span class="s">&#39;localhost&#39;</span><span class="p">)</span>
+<span class="n">OME_USER</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;OME_USER&#39;</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">)</span>
+<span class="n">OME_PASSWD</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;OME_PASSWD&#39;</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">)</span>
+<span class="n">STUDY_LABEL</span> <span class="o">=</span> <span class="s">&#39;KB_EXAMPLES&#39;</span>
+<span class="n">MSET_LABEL</span> <span class="o">=</span> <span class="s">&#39;DUMMY_MS&#39;</span>
+<span class="n">REF_GENOME</span> <span class="o">=</span> <span class="s">&#39;DUMMY_GENOME&#39;</span>
+
+<span class="n">kb</span> <span class="o">=</span> <span class="n">KB</span><span class="p">(</span><span class="n">driver</span><span class="o">=</span><span class="s">&#39;omero&#39;</span><span class="p">)(</span><span class="n">OME_HOST</span><span class="p">,</span> <span class="n">OME_USER</span><span class="p">,</span> <span class="n">OME_PASSWD</span><span class="p">)</span>
+<span class="n">marker_defs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c"># label   mask                                   index allele_flip</span>
+    <span class="p">(</span><span class="s">&#39;A001&#39;</span><span class="p">,</span> <span class="s">&#39;TCACTTCTTCAAAGCT[A/G]AGCTACAAGCATTATT&#39;</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="bp">False</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;A002&#39;</span><span class="p">,</span> <span class="s">&#39;GGAAGGAAGAAATAAA[C/G]CAGCACTATGTCTGGC&#39;</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="bp">False</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;A003&#39;</span><span class="p">,</span> <span class="s">&#39;CCGACCTAGTAGGCAA[A/G]TAGACACTGAGGCTGA&#39;</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="bp">False</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;A004&#39;</span><span class="p">,</span> <span class="s">&#39;AGGTCTATGTTAATAC[A/G]GAATCAGTTTCTCACC&#39;</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>  <span class="bp">True</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;A005&#39;</span><span class="p">,</span> <span class="s">&#39;AGATTACCATGCAGGA[A/T]CTGTTCTGAGATTAGC&#39;</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="bp">False</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;A006&#39;</span><span class="p">,</span> <span class="s">&#39;TCTACCTCTGTGACTA[C/G]AAGTGTTCTTTTATTT&#39;</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="bp">True</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&#39;A007&#39;</span><span class="p">,</span> <span class="s">&#39;AAGGCAATACTGTTCA[C/T]ATTGTATGGAAAGAAG&#39;</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="bp">True</span><span class="p">),</span>
+    <span class="p">]</span>
+</pre></div>
+</div>
+<p>See the <a class="reference internal" href="../usage/import.html#import-tool"><em>import tool documentation</em></a> for
+details on the mask, index and allele flip fields.  Now we have to
+import the above definitions into the KB:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">study</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">get_study</span><span class="p">(</span><span class="n">STUDY_LABEL</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">study</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s">&quot;ERROR: study &#39;</span><span class="si">%s</span><span class="s">&#39; not found&quot;</span> <span class="o">%</span> <span class="n">STUDY_LABEL</span><span class="p">)</span>
+<span class="n">action</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">create_an_action</span><span class="p">(</span><span class="n">study</span><span class="p">)</span>
+<span class="n">maker</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">release</span> <span class="o">=</span> <span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">N</span><span class="p">,</span> <span class="n">stream</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">marker_defs</span><span class="p">),</span> <span class="nb">iter</span><span class="p">(</span><span class="n">marker_defs</span><span class="p">)</span>
+<span class="n">mset</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">create_snp_markers_set</span><span class="p">(</span>
+    <span class="n">MSET_LABEL</span><span class="p">,</span> <span class="n">maker</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">release</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">action</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>If markers have been aligned to a reference genome, we can store the
+alignment information.  This information must be provided in the form
+of a stream of tuples that contain the marker&#8217;s id within the KB
+(called <em>vid</em>), chromosome number, position within the chromosome,
+strand info and number of copies.  Again, the <a class="reference internal" href="../usage/import.html#import-tool"><em>import tool docs</em></a> provide more details on this matter.  In this case, we
+will auto-generate dummy alignment info for all markers in the set:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mset</span><span class="o">.</span><span class="n">load_markers</span><span class="p">()</span>
+<span class="n">aligns</span> <span class="o">=</span> <span class="p">[(</span><span class="n">m</span><span class="p">[</span><span class="s">&#39;vid&#39;</span><span class="p">],</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">1000</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;A&#39;</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">%</span><span class="mi">2</span><span class="p">)</span><span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+          <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mset</span><span class="o">.</span><span class="n">markers</span><span class="p">)]</span>
+<span class="n">kb</span><span class="o">.</span><span class="n">align_snp_markers_set</span><span class="p">(</span><span class="n">mset</span><span class="p">,</span> <span class="n">REF_GENOME</span><span class="p">,</span> <span class="nb">iter</span><span class="p">(</span><span class="n">aligns</span><span class="p">),</span> <span class="n">action</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In OMERO.biobank, genotyping data is represented by a pair of arrays:</p>
+<ul class="simple">
+<li>a 2 X N array where each column represents the probabilities of
+being homozygous for allele A and B, respectively;</li>
+<li>a 1 X N array where each element represents a degree of confidence
+related to the corresponding probabilities in the above array;</li>
+</ul>
+<p>where N is the number of markers in the reference set.  The following
+snippet generates dummy genotyping data for all individuals enrolled
+in the study:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">make_dummy_data</span><span class="p">(</span><span class="n">ms</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ms</span><span class="p">)</span>
+    <span class="n">probabilities</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cast</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">](</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">)))</span>
+    <span class="n">confidence_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cast</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">](</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">probabilities</span><span class="p">,</span> <span class="n">confidence_values</span>
+
+<span class="n">data_sample_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kb</span><span class="o">.</span><span class="n">get_individuals</span><span class="p">(</span><span class="n">study</span><span class="p">)):</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">create_an_action</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">ind</span><span class="p">)</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&#39;label&#39;</span> <span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span><span class="p">,</span>
+        <span class="s">&#39;status&#39;</span> <span class="p">:</span> <span class="n">kb</span><span class="o">.</span><span class="n">DataSampleStatus</span><span class="o">.</span><span class="n">USABLE</span><span class="p">,</span>
+        <span class="s">&#39;action&#39;</span> <span class="p">:</span> <span class="n">action</span><span class="p">,</span>
+        <span class="s">&#39;snpMarkersSet&#39;</span> <span class="p">:</span> <span class="n">mset</span>
+        <span class="p">}</span>
+    <span class="n">data_sample</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">kb</span><span class="o">.</span><span class="n">GenotypeDataSample</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">probs</span><span class="p">,</span> <span class="n">confs</span> <span class="o">=</span> <span class="n">make_dummy_data</span><span class="p">(</span><span class="n">mset</span><span class="p">)</span>
+    <span class="n">do</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">add_gdo_data_object</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">data_sample</span><span class="p">,</span> <span class="n">probs</span><span class="p">,</span> <span class="n">confs</span><span class="p">)</span>
+    <span class="n">data_sample_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_sample</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Data samples keep track of the existence of genotyping data defined on
+a given marker set, while data objects model actual data containers
+such as files or OMERO table rows.  Multiple data objects can refer to
+the same data sample when they contain the same data, but encoded in
+different formats, or stored in distinct copies of the same file.</p>
+<p>For simplicity, we have defined an action that directly links each
+data sample to an individual.  While this approach can be used when no
+information is available on the steps that led to the production of
+the data sample, the KB allows to keep track of several intermediate
+objects such as blood samples, dna samples, titer plates, plate wells,
+etc.  To iterate over the data objects we have just stored, we can do
+the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;marker set id: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">mset</span><span class="o">.</span><span class="n">id</span>
+<span class="k">for</span> <span class="n">gdo</span> <span class="ow">in</span> <span class="n">kb</span><span class="o">.</span><span class="n">get_gdo_iterator</span><span class="p">(</span><span class="n">mset</span><span class="p">,</span> <span class="n">data_samples</span><span class="o">=</span><span class="n">data_sample_list</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">gdo</span><span class="p">[</span><span class="s">&#39;probs&#39;</span><span class="p">]</span>
+    <span class="k">print</span> <span class="n">gdo</span><span class="p">[</span><span class="s">&#39;confidence&#39;</span><span class="p">]</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-on-genomic-data">
+<h2>Working on genomic data<a class="headerlink" href="#working-on-genomic-data" title="Permalink to this headline">¶</a></h2>
+<p>This example shows how to manipulate genomic data stored in the KB and
+perform basic QC measures.</p>
+<p><strong>NOTE:</strong> the example assumes that the KB already contains all objects
+created by the examples on importing individuals and marker sets.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">bl.vl.kb</span> <span class="kn">import</span> <span class="n">KnowledgeBase</span> <span class="k">as</span> <span class="n">KB</span>
+<span class="kn">import</span> <span class="nn">bl.vl.genotype.algo</span> <span class="kn">as</span> <span class="nn">algo</span>
+
+<span class="n">OME_HOST</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;OME_HOST&#39;</span><span class="p">,</span> <span class="s">&#39;localhost&#39;</span><span class="p">)</span>
+<span class="n">OME_USER</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;OME_USER&#39;</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">)</span>
+<span class="n">OME_PASSWD</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;OME_PASSWD&#39;</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">)</span>
+<span class="n">STUDY_LABEL</span> <span class="o">=</span> <span class="s">&#39;KB_EXAMPLES&#39;</span>
+<span class="n">MSET_LABEL</span> <span class="o">=</span> <span class="s">&#39;DUMMY_MS&#39;</span>
+<span class="n">REF_GENOME</span> <span class="o">=</span> <span class="s">&#39;DUMMY_GENOME&#39;</span>
+
+<span class="n">kb</span> <span class="o">=</span> <span class="n">KB</span><span class="p">(</span><span class="n">driver</span><span class="o">=</span><span class="s">&quot;omero&quot;</span><span class="p">)(</span><span class="n">OME_HOST</span><span class="p">,</span> <span class="n">OME_USER</span><span class="p">,</span> <span class="n">OME_PASSWD</span><span class="p">)</span>
+<span class="n">mset</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">get_snp_markers_set</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">MSET_LABEL</span><span class="p">)</span>
+<span class="n">mset</span><span class="o">.</span><span class="n">load_markers</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The following snippet shows how to use part of a marker set&#8217;s interface:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s"> (</span><span class="si">%d</span><span class="s"> markers)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">mset</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">mset</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">mset</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mset</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> #</span><span class="si">%d</span><span class="s">: label=</span><span class="si">%s</span><span class="s">, mask=</span><span class="si">%s</span><span class="s">. pos=</span><span class="si">%r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">mask</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">position</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we will build a list of all data samples that refer to <tt class="docutils literal"><span class="pre">mset</span></tt>
+and are linked to an individual enrolled in a specific study.  To keep
+things simple, for each individual we will select the first known data
+sample that refers to <tt class="docutils literal"><span class="pre">mset</span></tt>; if no such data sample exist, we will
+skip the individual.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_data_samples</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">marker_set</span><span class="p">,</span> <span class="n">class_name</span><span class="p">):</span>
+    <span class="n">by_individual</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">kb</span><span class="o">.</span><span class="n">get_individuals</span><span class="p">(</span><span class="n">study</span><span class="p">):</span>
+        <span class="n">gds_i</span> <span class="o">=</span> <span class="p">[</span><span class="n">ds</span> <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">kb</span><span class="o">.</span><span class="n">get_data_samples</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
+                 <span class="k">if</span> <span class="n">ds</span><span class="o">.</span><span class="n">snpMarkersSet</span> <span class="o">==</span> <span class="n">marker_set</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">gds_i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">by_individual</span><span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">gds_i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">by_individual</span>
+
+<span class="n">test_study</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">get_study</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">STUDY_LABEL</span><span class="p">)</span>
+<span class="n">gds_by_individual</span> <span class="o">=</span> <span class="n">extract_data_samples</span><span class="p">(</span><span class="n">test_study</span><span class="p">,</span> <span class="n">mset</span><span class="p">,</span> <span class="s">&#39;GenotypeDataSample&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we can perform QC on data objects available for the selected data samples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">do_check</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">count_homozygotes</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">algo</span><span class="o">.</span><span class="n">maf</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">counts</span><span class="p">),</span> <span class="n">algo</span><span class="o">.</span><span class="n">hwe</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">counts</span><span class="p">)</span>
+
+<span class="n">gds</span> <span class="o">=</span> <span class="n">gds_by_individual</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">get_gdo_iterator</span><span class="p">(</span><span class="n">mset</span><span class="p">,</span> <span class="n">data_samples</span><span class="o">=</span><span class="n">gds</span><span class="p">)</span>
+<span class="n">mafs</span><span class="p">,</span> <span class="n">hwe</span> <span class="o">=</span> <span class="n">do_check</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Same as above, but on an arbitrary subset of the marker set:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">stream</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">get_gdo_iterator</span><span class="p">(</span>
+    <span class="n">mset</span><span class="p">,</span> <span class="n">data_samples</span><span class="o">=</span><span class="n">gds</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">mset</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="n">mafs</span><span class="p">,</span> <span class="n">hwe</span> <span class="o">=</span> <span class="n">do_check</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Same as above, but on a subset of the marker set based on the genomic
+coordinates of the markers.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mset</span><span class="o">.</span><span class="n">load_alignments</span><span class="p">(</span><span class="n">REF_GENOME</span><span class="p">)</span>
+<span class="n">chrom_start</span> <span class="o">=</span> <span class="n">chrom_end</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="mi">63000000</span><span class="p">,</span> <span class="mi">116000000</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">SNPMarkersSet</span><span class="o">.</span><span class="n">define_range_selector</span><span class="p">(</span>
+    <span class="n">mset</span><span class="p">,</span> <span class="n">gc_range</span><span class="o">=</span><span class="p">((</span><span class="n">chrom_start</span><span class="p">,</span> <span class="n">start</span><span class="p">),</span> <span class="p">(</span><span class="n">chrom_end</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+    <span class="p">)</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">get_gdo_iterator</span><span class="p">(</span>
+    <span class="n">mset</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="n">indices</span><span class="p">,</span> <span class="n">data_samples</span><span class="o">=</span><span class="n">gds</span>
+    <span class="p">)</span>
+<span class="n">mafs</span><span class="p">,</span> <span class="n">hwe</span> <span class="o">=</span> <span class="n">do_check</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../dev_manual/index.html" title="Developer’s manual"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="kb_tutorial.html" title="Knowledge Base tutorial"
+             >previous</a> |</li>
+        <li><a href="../index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li>
+          <li><a href="index.html" >A tour of Biobank&#8217;s API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, CRS4.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

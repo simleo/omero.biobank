@@ -1,0 +1,205 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The query tool &mdash; Biobank 0.6.0_dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6.0_dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Biobank 0.6.0_dev documentation" href="../index.html" />
+    <link rel="up" title="Tools Usage" href="index.html" />
+    <link rel="next" title="A tour of Biobank’s API" href="../api_tour/index.html" />
+    <link rel="prev" title="The import tool" href="import.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../api_tour/index.html" title="A tour of Biobank’s API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="import.html" title="The import tool"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Tools Usage</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The query tool</a><ul>
+<li><a class="reference internal" href="#generic-query-support">Generic query support</a></li>
+<li><a class="reference internal" href="#map-user-visible-labels-to-vids">Map user-visible labels to VIDs</a></li>
+<li><a class="reference internal" href="#extract-global-stats-from-the-kb">Extract global stats from the KB</a></li>
+<li><a class="reference internal" href="#select-a-group-of-individuals">Select a group of individuals</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="import.html"
+                        title="previous chapter">The import tool</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../api_tour/index.html"
+                        title="next chapter">A tour of Biobank&#8217;s API</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/usage/query.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-bl.vl.app.kb_query.main">
+<span id="the-query-tool"></span><h1>The query tool<a class="headerlink" href="#module-bl.vl.app.kb_query.main" title="Permalink to this headline">¶</a></h1>
+<p><tt class="docutils literal"><span class="pre">kb_query</span></tt> is the basic command line tool for extracting information
+from the Knowledge Base (KB).</p>
+<span class="target" id="module-bl.vl.app.kb_query.query"></span><div class="section" id="generic-query-support">
+<h2>Generic query support<a class="headerlink" href="#generic-query-support" title="Permalink to this headline">¶</a></h2>
+<p>The goal of this module is to provide a simplified environment for
+performing complex queries in the KB.</p>
+<p>The idea is that one invokes:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="k">${</span><span class="nv">KB_QUERY</span><span class="k">}</span> --ofile foo_junk.tsv -P romeo --operator aen <span class="se">\</span>
+  query --code-file foo.py --group BSTUDY
+</pre></div>
+</div>
+<p>where the contents of the code file are like the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">writeheader</span><span class="p">(</span><span class="s">&#39;dc_id&#39;</span><span class="p">,</span> <span class="s">&#39;gender&#39;</span><span class="p">,</span> <span class="s">&#39;data_sample&#39;</span><span class="p">,</span>
+            <span class="s">&#39;path&#39;</span><span class="p">,</span> <span class="s">&#39;mimetype&#39;</span><span class="p">,</span> <span class="s">&#39;size&#39;</span><span class="p">,</span> <span class="s">&#39;sha1&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">Individuals</span><span class="p">(</span><span class="n">group</span><span class="p">):</span>
+   <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">DataSamples</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s">&#39;AffymetrixCel&#39;</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">DataObjects</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+         <span class="n">writerow</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">enum_label</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">gender</span><span class="p">),</span> <span class="n">d</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                  <span class="n">o</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">o</span><span class="o">.</span><span class="n">mimetype</span><span class="p">,</span> <span class="n">o</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">o</span><span class="o">.</span><span class="n">sha1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and <tt class="docutils literal"><span class="pre">group</span></tt> (actually a study) corresponds to the group whose
+label is assigned by the <tt class="docutils literal"><span class="pre">--group</span></tt> flag.</p>
+<p><strong>Note: this tool executes arbitrary Python code: use it only if you
+know what you&#8217;re doing.</strong></p>
+</div>
+<span class="target" id="module-bl.vl.app.kb_query.map_vid"></span><div class="section" id="map-user-visible-labels-to-vids">
+<h2>Map user-visible labels to VIDs<a class="headerlink" href="#map-user-visible-labels-to-vids" title="Permalink to this headline">¶</a></h2>
+<p>Reads an input tsv file, replaces labels with VIDs for the specified
+columns and outputs a new tsv files with the VIDs.</p>
+</div>
+<span class="target" id="module-bl.vl.app.kb_query.global_stats"></span><div class="section" id="extract-global-stats-from-the-kb">
+<h2>Extract global stats from the KB<a class="headerlink" href="#extract-global-stats-from-the-kb" title="Permalink to this headline">¶</a></h2>
+<p>Outputs a tsv files with the following columns:</p>
+<div class="highlight-python"><pre>study  diagnosis technologies  gender  counts
+ASTUDY icd10:E10 Affymetrix.GENOMEWIDESNP_6;Illumina.HUMAN1M_DUO  MALE   230
+ASTUDY icd10:E10 Affymetrix.GENOMEWIDESNP_6;Illumina.HUMAN1M_DUO  FEMALE 200
+...</pre>
+</div>
+</div>
+<span class="target" id="module-bl.vl.app.kb_query.selector"></span><div class="section" id="select-a-group-of-individuals">
+<h2>Select a group of individuals<a class="headerlink" href="#select-a-group-of-individuals" title="Permalink to this headline">¶</a></h2>
+<p>Select a group of individuals from a specific group (from all avalable
+individuals, if no group is selected). Selections are controlled by
+the following parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li>total number of individuals selected</li>
+<li>male fraction</li>
+<li>reference disease</li>
+<li>control fraction</li>
+<li>presence of specific datasets</li>
+</ul>
+</div></blockquote>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">explain what we mean by &#8216;presence of specific datasets&#8217;.</p>
+</div>
+<p>The output file has the following format:</p>
+<div class="highlight-python"><pre>study label individual
+XXX   0001  V20940239409
+XXX   0002  V20940239509
+XXX   0003  V20940239609
+XXX   0004  V20940239709
+...</pre>
+</div>
+<p>where &#8216;study&#8217; is the name of the new study. The file can be used to
+generate a new study.</p>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">clarify the differences between &#8216;group&#8217; and &#8216;study&#8217;.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../api_tour/index.html" title="A tour of Biobank’s API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="import.html" title="The import tool"
+             >previous</a> |</li>
+        <li><a href="../index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li>
+          <li><a href="index.html" >Tools Usage</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, CRS4.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

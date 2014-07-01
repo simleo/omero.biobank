@@ -1,0 +1,2553 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>API reference &mdash; Biobank 0.6.0_dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6.0_dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Biobank 0.6.0_dev documentation" href="../index.html" />
+    <link rel="up" title="Developer’s manual" href="index.html" />
+    <link rel="next" title="Create custom models for OMERO.biobank" href="modelling.html" />
+    <link rel="prev" title="Biobank and OMERO" href="omero.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modelling.html" title="Create custom models for OMERO.biobank"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="omero.html" title="Biobank and OMERO"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer&#8217;s manual</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">API reference</a><ul>
+<li><a class="reference internal" href="#module-bl.vl.kb">Knowledge Base</a><ul>
+<li><a class="reference internal" href="#module-bl.vl.kb.drivers.omero.proxy">Omero driver</a><ul>
+<li><a class="reference internal" href="#genotyping-adapter">Genotyping adapter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-bl.vl.genotype">Genotype module</a><ul>
+<li><a class="reference internal" href="#genotyping-related-algorithms">Genotyping-related algorithms</a></li>
+<li><a class="reference internal" href="#genotyping-related-i-o">Genotyping-related I/O</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-bl.vl.individual">Individual module</a><ul>
+<li><a class="reference internal" href="#pedigree-manipulation-functions">Pedigree manipulation functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-bl.vl.utils">Utils module</a><ul>
+<li><a class="reference internal" href="#generic-utilities">Generic Utilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="omero.html"
+                        title="previous chapter">Biobank and OMERO</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="modelling.html"
+                        title="next chapter">Create custom models for OMERO.biobank</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/dev_manual/api_ref.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="api-reference">
+<h1>API reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-bl.vl.kb">
+<span id="knowledge-base"></span><h2>Knowledge Base<a class="headerlink" href="#module-bl.vl.kb" title="Permalink to this headline">¶</a></h2>
+<p>The Knowledge Base (KB) package provides interfaces for the
+application-side view of the backend object model, plus some syntact
+sugar to simplify common operations.</p>
+<dl class="class">
+<dt id="bl.vl.kb.Action">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">Action</tt><a class="headerlink" href="#bl.vl.kb.Action" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.ActionOnAction">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">ActionOnAction</tt><a class="headerlink" href="#bl.vl.kb.ActionOnAction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.ActionOnDataCollectionItem">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">ActionOnDataCollectionItem</tt><a class="headerlink" href="#bl.vl.kb.ActionOnDataCollectionItem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.ActionOnDataSample">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">ActionOnDataSample</tt><a class="headerlink" href="#bl.vl.kb.ActionOnDataSample" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.ActionOnVessel">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">ActionOnVessel</tt><a class="headerlink" href="#bl.vl.kb.ActionOnVessel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.ActionSetup">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">ActionSetup</tt><a class="headerlink" href="#bl.vl.kb.ActionSetup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.AffymetrixCel">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">AffymetrixCel</tt><a class="headerlink" href="#bl.vl.kb.AffymetrixCel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.Collection">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">Collection</tt><a class="headerlink" href="#bl.vl.kb.Collection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.Container">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">Container</tt><a class="headerlink" href="#bl.vl.kb.Container" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.DataCollection">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">DataCollection</tt><a class="headerlink" href="#bl.vl.kb.DataCollection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.DataCollectionItem">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">DataCollectionItem</tt><a class="headerlink" href="#bl.vl.kb.DataCollectionItem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.DataObject">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">DataObject</tt><a class="headerlink" href="#bl.vl.kb.DataObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.DataSample">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">DataSample</tt><a class="headerlink" href="#bl.vl.kb.DataSample" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.Device">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">Device</tt><a class="headerlink" href="#bl.vl.kb.Device" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.GenotypingMeasure">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">GenotypingMeasure</tt><a class="headerlink" href="#bl.vl.kb.GenotypingMeasure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="bl.vl.kb.KBError">
+<em class="property">exception </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">KBError</tt><a class="headerlink" href="#bl.vl.kb.KBError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="bl.vl.kb.KBPermissionError">
+<em class="property">exception </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">KBPermissionError</tt><a class="headerlink" href="#bl.vl.kb.KBPermissionError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.kb.KnowledgeBase">
+<tt class="descclassname">bl.vl.kb.</tt><tt class="descname">KnowledgeBase</tt><big>(</big><em>driver</em><big>)</big><a class="headerlink" href="#bl.vl.kb.KnowledgeBase" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.PlateWell">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">PlateWell</tt><a class="headerlink" href="#bl.vl.kb.PlateWell" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.SlottedContainer">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">SlottedContainer</tt><a class="headerlink" href="#bl.vl.kb.SlottedContainer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.Study">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">Study</tt><a class="headerlink" href="#bl.vl.kb.Study" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.TiterPlate">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">TiterPlate</tt><a class="headerlink" href="#bl.vl.kb.TiterPlate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.Tube">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">Tube</tt><a class="headerlink" href="#bl.vl.kb.Tube" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.Vessel">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.</tt><tt class="descname">Vessel</tt><a class="headerlink" href="#bl.vl.kb.Vessel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="section" id="module-bl.vl.kb.drivers.omero.proxy">
+<span id="omero-driver"></span><h3>Omero driver<a class="headerlink" href="#module-bl.vl.kb.drivers.omero.proxy" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.proxy.</tt><tt class="descname">Proxy</tt><big>(</big><em>host</em>, <em>user</em>, <em>passwd</em>, <em>group=None</em>, <em>session_keep_tokens=1</em>, <em>check_ome_version=True</em>, <em>extra_modules=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>An OMERO driver for the knowledge base.</p>
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.add_ehr_record">
+<tt class="descname">add_ehr_record</tt><big>(</big><em>action</em>, <em>timestamp</em>, <em>archetype</em>, <em>rec</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.add_ehr_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>multi-field records will be expanded to groups of records all
+with the same (assumed to be unique within a KB) group id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>action</strong> (<em>ActionOnIndividual</em>) &#8211; action that generated this record</li>
+<li><strong>timestamp</strong> (<em>long</em>) &#8211; when this record was collected, in millisecond
+since the Epoch</li>
+<li><strong>archetype</strong> (<em>str</em>) &#8211; a legal archetype id, e.g.,
+<tt class="docutils literal"><span class="pre">openEHR-EHR-EVALUATION.problem-diagnosis.v1</span></tt></li>
+<li><strong>rec</strong> (<em>dict</em>) &#8211; keys and values for this specific archetype instance,
+e.g., <tt class="docutils literal"><span class="pre">{'at0002.1':</span>
+<span class="pre">'terminology://apps.who.int/classifications/apps/gE10.htm#E10'}</span></tt></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.create_an_action">
+<tt class="descname">create_an_action</tt><big>(</big><em>study=None</em>, <em>target=None</em>, <em>doc=''</em>, <em>operator=None</em>, <em>device=None</em>, <em>acat=None</em>, <em>options=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.create_an_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syntactic sugar to simplify action creation.</p>
+<p>Unless explicitely provided, the action will use as its study the
+one identified by the label &#8216;STUDY-CREATE-AN-ACTION&#8217;.</p>
+<p>Unless explicitely provided, the action will use as its device the
+one identified by the label &#8216;DEVICE-CREATE-AN-ACTION&#8217;.</p>
+<p><strong>Note:</strong> this method is NOT supposed to be used in production
+code. It is merely a convenience to simplify action creation in
+small scripts.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.create_device">
+<tt class="descname">create_device</tt><big>(</big><em>label</em>, <em>maker</em>, <em>model</em>, <em>release</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.create_device" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.create_global_tables">
+<tt class="descname">create_global_tables</tt><big>(</big><em>destructive=False</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.create_global_tables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.find_all_by_query">
+<tt class="descname">find_all_by_query</tt><big>(</big><em>query</em>, <em>params</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.find_all_by_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_action_setup">
+<tt class="descname">get_action_setup</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_action_setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_birth_data">
+<tt class="descname">get_birth_data</tt><big>(</big><em>individual=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_birth_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_by_field">
+<tt class="descname">get_by_field</tt><big>(</big><em>klass</em>, <em>field_name</em>, <em>values</em>, <em>batch_size=240</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_by_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>FIXME returns a dictionary that map all v in values
+for which exists an object o of class klass such that o.field_name == v
+to o.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_by_label">
+<tt class="descname">get_by_label</tt><big>(</big><em>klass</em>, <em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_by_label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_by_labels">
+<tt class="descname">get_by_labels</tt><big>(</big><em>klass</em>, <em>labels</em>, <em>batch_size=240</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_by_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>FIXME Given a list of labels, returns a dictionary that map all
+label in labels for which exists an object o of class klass such
+that o.label == label, to o.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_by_vid">
+<tt class="descname">get_by_vid</tt><big>(</big><em>klass</em>, <em>vid</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_by_vid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_by_vids">
+<tt class="descname">get_by_vids</tt><big>(</big><em>klass</em>, <em>vids</em>, <em>batch_size=240</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_by_vids" title="Permalink to this definition">¶</a></dt>
+<dd><p>FIXME Given a list of vids, returns a dictionary that map all vid
+in vids for which exists an object o of class klass such that o.vid == vid
+to o.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_container">
+<tt class="descname">get_container</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_container" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_containers">
+<tt class="descname">get_containers</tt><big>(</big><em>klass=&lt;class 'bl.vl.kb.drivers.omero.objects_collections.Container'&gt;</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_containers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_data_collection">
+<tt class="descname">get_data_collection</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_data_collection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_data_collection_items">
+<tt class="descname">get_data_collection_items</tt><big>(</big><em>dc</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_data_collection_items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_data_objects">
+<tt class="descname">get_data_objects</tt><big>(</big><em>sample</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_data_objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_data_sample">
+<tt class="descname">get_data_sample</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_data_sample" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_data_samples">
+<tt class="descname">get_data_samples</tt><big>(</big><em>individual</em>, <em>data_sample_klass_name='DataSample'</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_data_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syntactic sugar to simplify the looping on DataSample(s) connected
+to an individual.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>individual</strong> (<em>Individual</em>) &#8211; the root individual object</li>
+<li><strong>data_sample_klass_name</strong> (<em>str</em>) &#8211; the name of the selected data_sample
+class, e.g. &#8216;AffymetrixCel&#8217; or &#8216;GenotypeDataSample&#8217;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> the current implementation does an expensive initialization,
+both in memory and cpu time, when it&#8217;s called for the first time.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_device">
+<tt class="descname">get_device</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_device" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_ehr">
+<tt class="descname">get_ehr</tt><big>(</big><em>individual</em>, <em>get_invalid=False</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_ehr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_ehr_iterator">
+<tt class="descname">get_ehr_iterator</tt><big>(</big><em>selector='(valid == True)'</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_ehr_iterator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_ehr_records">
+<tt class="descname">get_ehr_records</tt><big>(</big><em>selector='(valid == True)'</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_ehr_records" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_enrolled">
+<tt class="descname">get_enrolled</tt><big>(</big><em>study</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_enrolled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_enrollment">
+<tt class="descname">get_enrollment</tt><big>(</big><em>study</em>, <em>ind_label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_enrollment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_individuals">
+<tt class="descname">get_individuals</tt><big>(</big><em>group</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_individuals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syntactic sugar to simplify the looping on individuals contained
+in a group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>group</strong> (<em>Study</em>) &#8211; a study object, we will be looping on all the
+Individual(s) enrolled in it.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_lanes_by_flowcell">
+<tt class="descname">get_lanes_by_flowcell</tt><big>(</big><em>flowcell</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_lanes_by_flowcell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syntactic sugar to simplify Lane retrival using a known FlowCell</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>flowcell</strong> (<em>FlowCell</em>) &#8211; a known FlowCell</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_laneslots_by_lane">
+<tt class="descname">get_laneslots_by_lane</tt><big>(</big><em>lane</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_laneslots_by_lane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syntactic sugar to simplify LaneSlot retrival using a known Lane</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lane</strong> (<em>Lane</em>) &#8211; a known Lane</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_objects">
+<tt class="descname">get_objects</tt><big>(</big><em>klass</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_study">
+<tt class="descname">get_study</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_study" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_vessel">
+<tt class="descname">get_vessel</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_vessel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_vessels">
+<tt class="descname">get_vessels</tt><big>(</big><em>klass=&lt;class 'bl.vl.kb.drivers.omero.vessels.Vessel'&gt;</em>, <em>content=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_vessels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_vessels_by_individual">
+<tt class="descname">get_vessels_by_individual</tt><big>(</big><em>individual</em>, <em>vessel_klass_name='Vessel'</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_vessels_by_individual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syntactic sugar to simplify the looping in Vessels connected to an
+individual.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>individual</strong> (<em>Individual</em>) &#8211; the root individual object</li>
+<li><strong>vessel_klass_name</strong> (<em>str</em>) &#8211; the name of the selected vessel class,
+e.g. &#8216;Vial&#8217; or &#8216;PlateWell&#8217;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_vessels_collection">
+<tt class="descname">get_vessels_collection</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_vessels_collection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_vessels_collection_items">
+<tt class="descname">get_vessels_collection_items</tt><big>(</big><em>vc</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_vessels_collection_items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_well_on_plate">
+<tt class="descname">get_well_on_plate</tt><big>(</big><em>plate</em>, <em>row</em>, <em>column</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_well_on_plate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syntactic sugar to retrieve a specif PlateWell from a given TiterPlate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>plate</strong> (<em>TiterPlate</em>) &#8211; a known TiterPlate</li>
+<li><strong>row</strong> (<em>int</em>) &#8211; the required well row (base 0)</li>
+<li><strong>column</strong> (<em>int</em>) &#8211; the required well column (base 0)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.get_wells_by_plate">
+<tt class="descname">get_wells_by_plate</tt><big>(</big><em>plate</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.get_wells_by_plate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syntactic sugar to simplify PlateWell retrival using a known TiterPlate</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>plate</strong> (<em>TiterPlate</em>) &#8211; a known TiterPlate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.invalidate_ehr_records">
+<tt class="descname">invalidate_ehr_records</tt><big>(</big><em>individual_id</em>, <em>timestamp=None</em>, <em>action_id=None</em>, <em>grouper_id=None</em>, <em>archetype=None</em>, <em>field=None</em>, <em>field_value=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.invalidate_ehr_records" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.resolve_action_id">
+<tt class="descname">resolve_action_id</tt><big>(</big><em>action</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.resolve_action_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy.Proxy.validate_ehr_records">
+<tt class="descname">validate_ehr_records</tt><big>(</big><em>individual_id</em>, <em>timestamp=None</em>, <em>action_id=None</em>, <em>grouper_id=None</em>, <em>archetype=None</em>, <em>field=None</em>, <em>field_value=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy.Proxy.validate_ehr_records" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-bl.vl.kb.drivers.omero.proxy_core"></span><dl class="class">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.proxy_core.</tt><tt class="descname">ProxyCore</tt><big>(</big><em>host</em>, <em>user</em>, <em>passwd</em>, <em>group=None</em>, <em>session_keep_tokens=1</em>, <em>check_ome_version=True</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore" title="Permalink to this definition">¶</a></dt>
+<dd><p>A knowledge base implemented as a driver for OMERO.</p>
+<p>NOTE: keeping an open session leads to bad performance, because the
+Java garbage collector is called automatically and
+unpredictably. You cannot force garbage collection on an open
+session unless you are using Java. For this reason, we open a new
+session for each new operation on the database and close it when we
+are done, forcing the server to release the allocated memory.</p>
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.OME_TABLE_COLUMN">
+<tt class="descname">OME_TABLE_COLUMN</tt><em class="property"> = {'string': &lt;class 'omero.grid.StringColumn'&gt;, 'double': &lt;class 'omero.grid.DoubleColumn'&gt;, 'long': &lt;class 'omero.grid.LongColumn'&gt;, 'float_array': &lt;class 'omero.grid.FloatArrayColumn'&gt;, 'long_array': &lt;class 'omero.grid.LongArrayColumn'&gt;, 'bool': &lt;class 'omero.grid.BoolColumn'&gt;, 'double_array': &lt;class 'omero.grid.DoubleArrayColumn'&gt;}</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.OME_TABLE_COLUMN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.add_table_row">
+<tt class="descname">add_table_row</tt><big>(</big><em>table_name</em>, <em>row</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.add_table_row" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.add_table_rows">
+<tt class="descname">add_table_rows</tt><big>(</big><em>table_name</em>, <em>rows</em>, <em>batch_size=5000</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.add_table_rows" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.add_table_rows_from_stream">
+<tt class="descname">add_table_rows_from_stream</tt><big>(</big><em>table_name</em>, <em>stream</em>, <em>batch_size=5000</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.add_table_rows_from_stream" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.change_group">
+<tt class="descname">change_group</tt><big>(</big><em>group_name</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.change_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.change_to_session_default_group">
+<tt class="descname">change_to_session_default_group</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.change_to_session_default_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.change_to_user_default_group">
+<tt class="descname">change_to_user_default_group</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.change_to_user_default_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.clear_cache">
+<tt class="descname">clear_cache</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.clear_cache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.connect">
+<tt class="descname">connect</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.connect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.create_table">
+<tt class="descname">create_table</tt><big>(</big><em>table_name</em>, <em>fields</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.create_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.del_from_cache">
+<tt class="descname">del_from_cache</tt><big>(</big><em>ome_obj</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.del_from_cache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.delete">
+<tt class="descname">delete</tt><big>(</big><em>kb_obj</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a KB object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.delete_table">
+<tt class="descname">delete_table</tt><big>(</big><em>table_name</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.delete_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method only removes the OriginalFile table entry from database.</p>
+<p>For actual file removal run, on the server:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="k">${</span><span class="nv">OMERO_HOME</span><span class="k">}</span>/bin/omero admin cleanse <span class="k">${</span><span class="nv">OMERO_DATA_DIR</span><span class="k">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.disconnect">
+<tt class="descname">disconnect</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.find_all_by_query">
+<tt class="descname">find_all_by_query</tt><big>(</big><em>query</em>, <em>params</em>, <em>factory</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.find_all_by_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_current_group">
+<tt class="descname">get_current_group</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_current_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the group&#8217;s name and the group&#8217;s object related to the group currently
+connected to the user. If a connection is not opened yet, return None, None</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_from_cache">
+<tt class="descname">get_from_cache</tt><big>(</big><em>ome_obj</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_from_cache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_number_of_rows">
+<tt class="descname">get_number_of_rows</tt><big>(</big><em>table_name</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_number_of_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the number of rows of table table_name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_table_headers">
+<tt class="descname">get_table_headers</tt><big>(</big><em>table_name</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_table_headers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_table_rows">
+<tt class="descname">get_table_rows</tt><big>(</big><em>table_name</em>, <em>selector=None</em>, <em>col_names=None</em>, <em>batch_size=5000</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_table_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>selector can be one of None, a selection or a list of selections. In
+the latter case, it is interpreted as an &#8216;or&#8217; condition between
+the list elements.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_table_rows_by_indices">
+<tt class="descname">get_table_rows_by_indices</tt><big>(</big><em>table_name</em>, <em>indices=None</em>, <em>col_names=None</em>, <em>batch_size=5000</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_table_rows_by_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>indices must be either None or a list of integer values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_table_rows_iterator">
+<tt class="descname">get_table_rows_iterator</tt><big>(</big><em>table_name</em>, <em>batch_size=100</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_table_rows_iterator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_table_slice">
+<tt class="descname">get_table_slice</tt><big>(</big><em>table_name</em>, <em>row_numbers</em>, <em>col_names=None</em>, <em>batch_size=5000</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.get_table_slice" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.is_group_leader">
+<tt class="descname">is_group_leader</tt><big>(</big><em>group_name=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.is_group_leader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the current user is leader of the group labeled group_name, if no
+group_name is provided, check against the group in which the user is currently
+logged in</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.is_member_of_group">
+<tt class="descname">is_member_of_group</tt><big>(</big><em>group_name</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.is_member_of_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.ome_operation">
+<tt class="descname">ome_operation</tt><big>(</big><em>operation</em>, <em>action</em>, <em>*action_args</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.ome_operation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.ome_query_params">
+<tt class="descname">ome_query_params</tt><big>(</big><em>conf</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.ome_query_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.pop_context_manager">
+<tt class="descname">pop_context_manager</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.pop_context_manager" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.push_context_manager">
+<tt class="descname">push_context_manager</tt><big>(</big><em>ctx_manager</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.push_context_manager" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.read_whole_table">
+<tt class="descname">read_whole_table</tt><big>(</big><em>table_name</em>, <em>batch_size=10000</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.read_whole_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads all data contained in the omero table called table_name and
+return result as a numpy records array.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.reload_object">
+<tt class="descname">reload_object</tt><big>(</big><em>o</em>, <em>fields=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.reload_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.save">
+<tt class="descname">save</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save and return a KB object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.save_array">
+<tt class="descname">save_array</tt><big>(</big><em>array</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.save_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save and return an array of KB objects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.start_keep_alive">
+<tt class="descname">start_keep_alive</tt><big>(</big><em>timeout=300</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.start_keep_alive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.stop_keep_alive">
+<tt class="descname">stop_keep_alive</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.stop_keep_alive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.store_as_a_table">
+<tt class="descname">store_as_a_table</tt><big>(</big><em>table_name</em>, <em>records</em>, <em>batch_size=10000</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.store_as_a_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new omero table called table_name and store in it the
+contents of records, a numpy records array.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.store_to_cache">
+<tt class="descname">store_to_cache</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.store_to_cache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.table_exists">
+<tt class="descname">table_exists</tt><big>(</big><em>table_name</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.table_exists" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.update_by_example">
+<tt class="descname">update_by_example</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.update_by_example" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.update_table_row">
+<tt class="descname">update_table_row</tt><big>(</big><em>table_name</em>, <em>selector</em>, <em>row</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.update_table_row" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.ProxyCore.update_table_rows">
+<tt class="descname">update_table_rows</tt><big>(</big><em>table_name</em>, <em>selector</em>, <em>update_items</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.ProxyCore.update_table_rows" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.convert_coordinates_to_np">
+<tt class="descclassname">bl.vl.kb.drivers.omero.proxy_core.</tt><tt class="descname">convert_coordinates_to_np</tt><big>(</big><em>d</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.convert_coordinates_to_np" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.convert_from_numpy">
+<tt class="descclassname">bl.vl.kb.drivers.omero.proxy_core.</tt><tt class="descname">convert_from_numpy</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.convert_from_numpy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.convert_to_numpy_record_type">
+<tt class="descclassname">bl.vl.kb.drivers.omero.proxy_core.</tt><tt class="descname">convert_to_numpy_record_type</tt><big>(</big><em>d</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.convert_to_numpy_record_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.convert_type">
+<tt class="descclassname">bl.vl.kb.drivers.omero.proxy_core.</tt><tt class="descname">convert_type</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.convert_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.kb.drivers.omero.proxy_core.dtype_to_ome_table_column">
+<tt class="descclassname">bl.vl.kb.drivers.omero.proxy_core.</tt><tt class="descname">dtype_to_ome_table_column</tt><big>(</big><em>name</em>, <em>dtype</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.proxy_core.dtype_to_ome_table_column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-bl.vl.kb.drivers.omero.wrapper"></span><dl class="class">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.wrapper.</tt><tt class="descname">CoreOmeroWrapper</tt><big>(</big><em>ome_obj</em>, <em>proxy</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = None</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.bare_getattr">
+<tt class="descname">bare_getattr</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.bare_getattr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.bare_setattr">
+<tt class="descname">bare_setattr</tt><big>(</big><em>name</em>, <em>v</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.bare_setattr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.enum_label">
+<tt class="descname">enum_label</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.enum_label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.from_omero">
+<tt class="descname">from_omero</tt><big>(</big><em>tcode</em>, <em>v</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.from_omero" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.get_ome_table">
+<em class="property">classmethod </em><tt class="descname">get_ome_table</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.get_ome_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.get_ome_type">
+<em class="property">classmethod </em><tt class="descname">get_ome_type</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.get_ome_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.id">
+<tt class="descname">id</tt><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.is_loaded">
+<tt class="descname">is_loaded</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.is_loaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.is_mapped">
+<tt class="descname">is_mapped</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.is_mapped" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.is_upcastable">
+<tt class="descname">is_upcastable</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.is_upcastable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.omero_id">
+<tt class="descname">omero_id</tt><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.omero_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.reload">
+<tt class="descname">reload</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.reload" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.serialize">
+<tt class="descname">serialize</tt><big>(</big><em>engine</em>, <em>shallow=False</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.serialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.to_omero">
+<tt class="descname">to_omero</tt><big>(</big><em>tcode</em>, <em>v</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.to_omero" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.unload">
+<tt class="descname">unload</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.unload" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.upcast">
+<tt class="descname">upcast</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.CoreOmeroWrapper.upcast" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.wrapper.MetaWrapper">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.wrapper.</tt><tt class="descname">MetaWrapper</tt><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.MetaWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.wrapper.MetaWrapper.make_configurator">
+<em class="property">classmethod </em><tt class="descname">make_configurator</tt><big>(</big><em>base</em>, <em>fields</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.MetaWrapper.make_configurator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.wrapper.MetaWrapper.make_getter">
+<em class="property">classmethod </em><tt class="descname">make_getter</tt><big>(</big><em>base</em>, <em>fields</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.MetaWrapper.make_getter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.wrapper.MetaWrapper.make_initializer">
+<em class="property">classmethod </em><tt class="descname">make_initializer</tt><big>(</big><em>base</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.MetaWrapper.make_initializer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.wrapper.MetaWrapper.make_setter">
+<em class="property">classmethod </em><tt class="descname">make_setter</tt><big>(</big><em>base</em>, <em>fields</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.MetaWrapper.make_setter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.wrapper.MetaWrapper.make_to_conf">
+<em class="property">classmethod </em><tt class="descname">make_to_conf</tt><big>(</big><em>base</em>, <em>fields</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.MetaWrapper.make_to_conf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.wrapper.MetaWrapper.normalize_fields">
+<em class="property">classmethod </em><tt class="descname">normalize_fields</tt><big>(</big><em>fields</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.MetaWrapper.normalize_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.wrapper.ObjectFactory">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.wrapper.</tt><tt class="descname">ObjectFactory</tt><big>(</big><em>proxy</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.ObjectFactory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.ObjectFactory.create">
+<tt class="descname">create</tt><big>(</big><em>klass</em>, <em>conf</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.ObjectFactory.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.ObjectFactory.wrap">
+<tt class="descname">wrap</tt><big>(</big><em>ome_obj</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.ObjectFactory.wrap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.wrapper.OmeroWrapper">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.wrapper.</tt><tt class="descname">OmeroWrapper</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.OmeroWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>All kb.drivers.omero classes should derive from this class.</p>
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.wrapper.OmeroWrapper.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = None</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.OmeroWrapper.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.OmeroWrapper.configure">
+<tt class="descname">configure</tt><big>(</big><em>conf</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.OmeroWrapper.configure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.wrapper.OmeroWrapper.is_enum">
+<em class="property">classmethod </em><tt class="descname">is_enum</tt><big>(</big><em>klass</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.OmeroWrapper.is_enum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.wrapper.OmeroWrapper.map_enums_values">
+<em class="property">classmethod </em><tt class="descname">map_enums_values</tt><big>(</big><em>klass</em>, <em>proxy</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.OmeroWrapper.map_enums_values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.wrapper.OmeroWrapper.to_conf">
+<tt class="descname">to_conf</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.OmeroWrapper.to_conf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.kb.drivers.omero.wrapper.ome_wrap">
+<tt class="descclassname">bl.vl.kb.drivers.omero.wrapper.</tt><tt class="descname">ome_wrap</tt><big>(</big><em>v</em>, <em>wtype=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.ome_wrap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.kb.drivers.omero.wrapper.safe_rstring">
+<tt class="descclassname">bl.vl.kb.drivers.omero.wrapper.</tt><tt class="descname">safe_rstring</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.wrapper.safe_rstring" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-bl.vl.kb.drivers.omero.modeling"></span><dl class="class">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.modeling.</tt><tt class="descname">ModelingAdapter</tt><big>(</big><em>kb</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_action_setup">
+<tt class="descname">get_action_setup</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_action_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the ActionSetup object labeled &#8216;label&#8217; or None if nothing
+matches &#8216;label&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_container">
+<tt class="descname">get_container</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_container" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_containers">
+<tt class="descname">get_containers</tt><big>(</big><em>klass</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_containers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_data_collection">
+<tt class="descname">get_data_collection</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_data_collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the DataCollection object labeled &#8216;label&#8217; or
+None if nothing matches &#8216;label&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_data_collection_items">
+<tt class="descname">get_data_collection_items</tt><big>(</big><em>dc</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_data_collection_items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_data_objects">
+<tt class="descname">get_data_objects</tt><big>(</big><em>sample</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_data_objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_data_sample">
+<tt class="descname">get_data_sample</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_data_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the DataSample object labeled &#8216;label&#8217; or None if nothing
+matches &#8216;label&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_device">
+<tt class="descname">get_device</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_device" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the Device object labeled &#8216;label&#8217; or None if nothing
+matches &#8216;label&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_enrolled">
+<tt class="descname">get_enrolled</tt><big>(</big><em>study</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_enrolled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_enrollment">
+<tt class="descname">get_enrollment</tt><big>(</big><em>study</em>, <em>ind_label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_enrollment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_objects">
+<tt class="descname">get_objects</tt><big>(</big><em>klass</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_snp_markers_set">
+<tt class="descname">get_snp_markers_set</tt><big>(</big><em>label</em>, <em>maker</em>, <em>model</em>, <em>release</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_snp_markers_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_study">
+<tt class="descname">get_study</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_study" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the Study object labeled &#8216;label&#8217; or None if nothing
+matches &#8216;label&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_vessel">
+<tt class="descname">get_vessel</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_vessel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the Vessel object labeled &#8216;label&#8217; or None if nothing
+matches &#8216;label&#8217;. A label &#8216;foo:A1&#8217; is interpreted as well &#8216;A1&#8217; of
+plate &#8216;foo&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_vessels">
+<tt class="descname">get_vessels</tt><big>(</big><em>klass</em>, <em>content</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_vessels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_vessels_collection">
+<tt class="descname">get_vessels_collection</tt><big>(</big><em>label</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_vessels_collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the VesselsCollection object labeled &#8216;label&#8217; or None if
+nothing matches &#8216;label&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_vessels_collection_items">
+<tt class="descname">get_vessels_collection_items</tt><big>(</big><em>vc</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.modeling.ModelingAdapter.get_vessels_collection_items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-bl.vl.kb.drivers.omero.genotyping"></span><div class="section" id="genotyping-adapter">
+<h4>Genotyping adapter<a class="headerlink" href="#genotyping-adapter" title="Permalink to this headline">¶</a></h4>
+<p>This module adds genotyping support to the knowledge base.  The
+central entity is the genetic marker, a mutation in the DNA that can
+be used to study the relationship between a phenotypic trait and its
+genetic cause.  We model a specific type of marker known as Single
+Nucleotide Polymorphism (SNP).</p>
+<p>SNPs are variations at a single position in a DNA sequence.  In most
+cases, a SNP consists of only two variants, or alleles, customarily
+denoted by the letters A and B.  Thus, for diploid organisms such as
+humans, there are three possible genotype configurations at each SNP
+site: AA, AB and BB.</p>
+<p>a SNP is typically described by a mask in the &lt;FLANK&gt;[A/B]&lt;FLANK&gt;
+format.  Allele order is defined by the order within the square
+brackets.  The mask is expected to be in the TOP Illumina convention,
+if the Illumina strand detection algorithm yields a result (see
+<a class="reference internal" href="#bl.vl.utils.snp.convert_to_top" title="bl.vl.utils.snp.convert_to_top"><tt class="xref py py-func docutils literal"><span class="pre">convert_to_top()</span></tt></a>).</p>
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.genotyping.</tt><tt class="descname">GenotypingAdapter</tt><big>(</big><em>kb</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.SNP_ALIGNMENT_COLS">
+<tt class="descname">SNP_ALIGNMENT_COLS</tt><em class="property"> = [('string', 'marker_vid', 'Marker VID', 34, None), ('string', 'ref_genome', 'Reference alignment genome', 16, None), ('long', 'chromosome', '1-22, 23(X), 24(Y), 25(XY), 26(MT)', None), ('long', 'pos', &quot;Position on the chromosome wrt 5'&quot;, None), ('long', 'global_pos', 'Overall position in the genome', None), ('bool', 'strand', 'True if aligned on reference strand', None), ('string', 'allele', 'Allele found at this position (A/B)', 1, None), ('long', 'copies', 'Number of alignments for this marker', None), ('string', 'op_vid', 'Last operation that modified this row', 34, None)]</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.SNP_ALIGNMENT_COLS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.SNP_FLANK_SIZE">
+<tt class="descname">SNP_FLANK_SIZE</tt><em class="property"> = 125</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.SNP_FLANK_SIZE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.SNP_GDO_REPO_COLS">
+<em class="property">static </em><tt class="descname">SNP_GDO_REPO_COLS</tt><big>(</big><em>N</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.SNP_GDO_REPO_COLS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.SNP_MASK_SIZE">
+<tt class="descname">SNP_MASK_SIZE</tt><em class="property"> = 255</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.SNP_MASK_SIZE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.SNP_SET_COLS">
+<tt class="descname">SNP_SET_COLS</tt><em class="property"> = [('string', 'vid', 'Marker VID', 34, None), ('string', 'label', 'Marker label', 48, None), ('string', 'mask', 'Illumina TOP mask in the &lt;FLANK&gt;[A/B]&lt;FLANK&gt; format', 255, None), ('long', 'index', 'Marker index within this set', None), ('bool', 'allele_flip', 'True if the A/B convention is reversed', None), ('string', 'op_vid', 'Last operation that modified this row', 34, None)]</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.SNP_SET_COLS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.add_gdo">
+<tt class="descname">add_gdo</tt><big>(</big><em>set_vid</em>, <em>probs</em>, <em>confidence</em>, <em>op_vid</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.add_gdo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.add_snp_markers_set_alignments">
+<tt class="descname">add_snp_markers_set_alignments</tt><big>(</big><em>mset</em>, <em>stream</em>, <em>action</em>, <em>batch_size=5000</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.add_snp_markers_set_alignments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add alignment info to a SNPMarkersSet table.</p>
+<p>In the case of multiple hits, only the first copy encountered is
+added in the same order as it is found in the input stream;
+additional copies are temporarily stored and appended at the end.
+In addition, the global position field for all copies will be set
+to a unique negative value. Duplicate global positions (different
+SNPs align to the same position) will also be replaced by unique
+negative values. This is done to avoid ambiguities in marker set
+intersection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.create_snp_markers_set_tables">
+<tt class="descname">create_snp_markers_set_tables</tt><big>(</big><em>set_vid</em>, <em>N</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.create_snp_markers_set_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all tables needed by a SNPMarkersSet.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.define_snp_markers_set">
+<tt class="descname">define_snp_markers_set</tt><big>(</big><em>set_vid</em>, <em>stream</em>, <em>op_vid</em>, <em>batch_size=5000</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.define_snp_markers_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill in a SNPMarkersSet definition table.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.delete_snp_markers_set_tables">
+<tt class="descname">delete_snp_markers_set_tables</tt><big>(</big><em>set_vid</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.delete_snp_markers_set_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete all tables related to a SNPMarkersSet.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.get_gdo">
+<tt class="descname">get_gdo</tt><big>(</big><em>set_vid</em>, <em>vid</em>, <em>row_index</em>, <em>indices=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.get_gdo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.get_gdo_iterator">
+<tt class="descname">get_gdo_iterator</tt><big>(</big><em>set_vid</em>, <em>indices=None</em>, <em>batch_size=100</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.get_gdo_iterator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.read_snp_markers_set">
+<tt class="descname">read_snp_markers_set</tt><big>(</big><em>set_vid</em>, <em>selector=None</em>, <em>batch_size=5000</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.read_snp_markers_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.read_snp_markers_set_alignments">
+<tt class="descname">read_snp_markers_set_alignments</tt><big>(</big><em>set_vid</em>, <em>selector=None</em>, <em>batch_size=5000</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.read_snp_markers_set_alignments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.snp_markers_set_table_name">
+<em class="property">classmethod </em><tt class="descname">snp_markers_set_table_name</tt><big>(</big><em>klass</em>, <em>table_name_root</em>, <em>set_vid</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.snp_markers_set_table_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.snp_markers_set_table_name_parse">
+<em class="property">classmethod </em><tt class="descname">snp_markers_set_table_name_parse</tt><big>(</big><em>klass</em>, <em>table_name</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.GenotypingAdapter.snp_markers_set_table_name_parse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.genotyping.Marker">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.genotyping.</tt><tt class="descname">Marker</tt><big>(</big><em>vid</em>, <em>index=None</em>, <em>position=(0</em>, <em>0)</em>, <em>flip=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.Marker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps the contents of a marker definition and associate information.</p>
+<dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.genotyping.Marker.get_ome_table">
+<em class="property">classmethod </em><tt class="descname">get_ome_table</tt><big>(</big><em>klass</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.Marker.get_ome_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.genotyping.</tt><tt class="descname">SNPMarkersSet</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.MAX_GENOME_LEN">
+<tt class="descname">MAX_GENOME_LEN</tt><em class="property"> = 10000000000</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.MAX_GENOME_LEN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.MAX_LEN">
+<tt class="descname">MAX_LEN</tt><em class="property"> = 100000000</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.MAX_LEN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'SNPMarkersSet'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.compute_global_position">
+<em class="property">static </em><tt class="descname">compute_global_position</tt><big>(</big><em>p</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.compute_global_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.define_range_selector">
+<em class="property">static </em><tt class="descname">define_range_selector</tt><big>(</big><em>mset</em>, <em>gc_range</em>, <em>closed_interval=True</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.define_range_selector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a numpy array with the indices of the markers of mset that
+are contained in the provided gc_range. A gc_range is a two
+elements tuple, with each element a tuple (chromosome,
+position), where chromosome is an int in [1,26], and pos is a positive
+int. Both positional tuples should be for the same reference
+genome.  It is a responsibility of the caller to assure that mset
+has loaded markers definitions aligned on the same reference genome.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ref_genome</span> <span class="o">=</span> <span class="s">&#39;hg19&#39;</span>
+<span class="n">beg_chr</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">beg_pos</span> <span class="o">=</span> <span class="mi">190000</span>
+<span class="n">end_chr</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">end_pos</span> <span class="o">=</span> <span class="mi">300000</span>
+
+<span class="n">gc_begin</span><span class="o">=</span><span class="p">(</span><span class="n">begin_chrom</span><span class="p">,</span> <span class="n">begin_pos</span><span class="p">)</span>
+<span class="n">gc_end</span>  <span class="o">=</span><span class="p">(</span><span class="n">end_chrom</span><span class="p">,</span> <span class="n">end_pos</span><span class="p">)</span>
+
+<span class="n">ms</span><span class="o">.</span><span class="n">load_alignments</span><span class="p">(</span><span class="n">ref_genome</span><span class="p">)</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">SNPMarkersSet</span><span class="o">.</span><span class="n">define_range_selector</span><span class="p">(</span>
+  <span class="n">ms</span><span class="p">,</span>
+  <span class="n">gc_range</span><span class="o">=</span><span class="p">(</span><span class="n">gc_begin</span><span class="p">,</span> <span class="n">gc_end</span><span class="p">)</span>
+  <span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+  <span class="k">assert</span> <span class="p">(</span><span class="n">beg_chr</span><span class="p">,</span> <span class="n">beg_pos</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">ms</span><span class="o">.</span><span class="n">markers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">position</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">end_chr</span><span class="p">,</span> <span class="n">end_pos</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.get_markers_iterator">
+<tt class="descname">get_markers_iterator</tt><big>(</big><em>indices=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.get_markers_iterator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.has_aligns">
+<tt class="descname">has_aligns</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.has_aligns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.has_markers">
+<tt class="descname">has_markers</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.has_markers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.id">
+<tt class="descname">id</tt><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.intersect">
+<em class="property">static </em><tt class="descname">intersect</tt><big>(</big><em>mset1</em>, <em>mset2</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.intersect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a pair of equal length numpy arrays where corresponding
+array elements are the indices of markers, respectively in mset1
+and mset2, that align to the same position on the same ref_genome.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ref_genome</span> <span class="o">=</span> <span class="s">&#39;hg19&#39;</span>
+<span class="n">ms1</span><span class="o">.</span><span class="n">load_alignments</span><span class="p">(</span><span class="n">ref_genome</span><span class="p">)</span>
+<span class="n">ms2</span><span class="o">.</span><span class="n">load_alignments</span><span class="p">(</span><span class="n">ref_genome</span><span class="p">)</span>
+<span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">SNPMarkersSet</span><span class="o">.</span><span class="n">intersect</span><span class="p">(</span><span class="n">ms1</span><span class="p">,</span> <span class="n">ms2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span> <span class="ow">in</span> <span class="n">it</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">):</span>
+  <span class="k">assert</span> <span class="n">ms1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">position</span> <span class="o">==</span> <span class="n">ms2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">position</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.load_alignments">
+<tt class="descname">load_alignments</tt><big>(</big><em>ref_genome</em>, <em>batch_size=1000</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.load_alignments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load marker alignment info wrt <tt class="docutils literal"><span class="pre">ref_genome</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.load_markers">
+<tt class="descname">load_markers</tt><big>(</big><em>batch_size=1000</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.load_markers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read marker info from the marker set table and store it in the
+markers attribute.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.vid">
+<tt class="descname">vid</tt><a class="headerlink" href="#bl.vl.kb.drivers.omero.genotyping.SNPMarkersSet.vid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<span class="target" id="module-bl.vl.kb.drivers.omero.eav"></span><dl class="class">
+<dt id="bl.vl.kb.drivers.omero.eav.EAVAdapter">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.eav.</tt><tt class="descname">EAVAdapter</tt><big>(</big><em>kb</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.eav.EAVAdapter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.eav.EAVAdapter.EAV_EHR_TABLE">
+<tt class="descname">EAV_EHR_TABLE</tt><em class="property"> = 'eav_ehr_table.h5'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.eav.EAVAdapter.EAV_EHR_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.eav.EAVAdapter.EAV_STORAGE_COLS">
+<tt class="descname">EAV_STORAGE_COLS</tt><em class="property"> = [('long', 'timestamp', 'When this row was written', None), ('string', 'i_vid', 'a unique identifier that points to the kb object (typically an\n    individual) related to this record. This is actually redundant,\n    since it should be possible to recover it by looking at the target\n    of the action identified by a_vid. It is kept as a convenience,\n    but it is a responsibility of the user app to keep data consistent.\n    ', 34, None), ('string', 'a_vid', 'a unique identifier that points to the Action that generates the\n    record (a single Action can generate several records. We need the\n    Action to know how data was collected, when it was collected and where)', 34, None), ('bool', 'valid', 'nothing will be deleted, so we keep a flag to know if the record\n    is a valid one and if we can use it', None), ('string', 'g_vid', 'a grouper used to group records together', 34, None), ('string', 'archetype', 'the Archetype we used to represent the data we are collecting\n    so that we can have a field that can group data together and the\n    API can retrieve the proper object. We also need this field in\n    order to know the version of the Archetype we are using.', 256, None), ('string', 'field', 'the field for the current Archetype that the current row is\n    representing in order to provide data bindings (constraints, data\n    magnitude etc.) and the proper data type (it\'s quite easy to convert\n    ADL types to Omero Table types). This field will contain the attribute\n    code inside the ADL model (like the &quot;at0005&quot; field of the Blood Pressure\n    archetype); everything else we need to make this field understandable by\n    a human user can be found in the ontology section of the archetype (a name\n    in a human language, an explanation about what the field means).', 256, None), ('string', 'type', 'this record type, one of str, long, float, bool', 10, None), ('string', 'svalue', 'this record string value', 256, None), ('bool', 'bvalue', 'this record boolean value', None), ('long', 'lvalue', 'this record long value', None), ('double', 'dvalue', 'this record double value', None)]</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.eav.EAVAdapter.EAV_STORAGE_COLS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.eav.EAVAdapter.FIELD_TYPE_ENCODING_TABLE">
+<tt class="descname">FIELD_TYPE_ENCODING_TABLE</tt><em class="property"> = {'int': ('long', 'lvalue', 0), 'float': ('float', 'dvalue', 0.0), 'long': ('long', 'lvalue', 0), 'datetime': ('date', 'dvalue', 0.0), 'bool': ('bool', 'bvalue', False), 'str': ('str', 'svalue', None)}</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.eav.EAVAdapter.FIELD_TYPE_ENCODING_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.eav.EAVAdapter.add_eav_record_row">
+<tt class="descname">add_eav_record_row</tt><big>(</big><em>row</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.eav.EAVAdapter.add_eav_record_row" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.eav.EAVAdapter.create_ehr_table">
+<tt class="descname">create_ehr_table</tt><big>(</big><em>destructive=False</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.eav.EAVAdapter.create_ehr_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.eav.EAVAdapter.decode_field_value">
+<em class="property">classmethod </em><tt class="descname">decode_field_value</tt><big>(</big><em>klass</em>, <em>ftype</em>, <em>svalue</em>, <em>bvalue</em>, <em>lvalue</em>, <em>dvalue</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.eav.EAVAdapter.decode_field_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="bl.vl.kb.drivers.omero.eav.EAVAdapter.encode_field_value">
+<em class="property">classmethod </em><tt class="descname">encode_field_value</tt><big>(</big><em>klass</em>, <em>row</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.eav.EAVAdapter.encode_field_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.eav.EAVAdapter.get_eav_record_rows">
+<tt class="descname">get_eav_record_rows</tt><big>(</big><em>selector</em>, <em>batch_size=5000</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.eav.EAVAdapter.get_eav_record_rows" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-bl.vl.kb.drivers.omero.action"></span><dl class="class">
+<dt id="bl.vl.kb.drivers.omero.action.Action">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.action.</tt><tt class="descname">Action</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.Action" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.Action.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'Action'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.Action.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.action.ActionCategory">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.action.</tt><tt class="descname">ActionCategory</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.ActionCategory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.ActionCategory.ALIQUOTING">
+<tt class="descname">ALIQUOTING</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.action.ActionCategory object at 0x4a6c110&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.ActionCategory.ALIQUOTING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.ActionCategory.CREATION">
+<tt class="descname">CREATION</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.action.ActionCategory object at 0x4a61dd0&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.ActionCategory.CREATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.ActionCategory.EXTRACTION">
+<tt class="descname">EXTRACTION</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.action.ActionCategory object at 0x4a61ed0&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.ActionCategory.EXTRACTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.ActionCategory.IMPORT">
+<tt class="descname">IMPORT</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.action.ActionCategory object at 0x4a61bd0&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.ActionCategory.IMPORT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.ActionCategory.MEASUREMENT">
+<tt class="descname">MEASUREMENT</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.action.ActionCategory object at 0x4a6c210&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.ActionCategory.MEASUREMENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.ActionCategory.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'ActionCategory'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.ActionCategory.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.ActionCategory.PROCESSING">
+<tt class="descname">PROCESSING</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.action.ActionCategory object at 0x4a6c310&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.ActionCategory.PROCESSING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.ActionCategory.UPDATE">
+<tt class="descname">UPDATE</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.action.ActionCategory object at 0x4a61fd0&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.ActionCategory.UPDATE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.action.ActionSetup">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.action.</tt><tt class="descname">ActionSetup</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.ActionSetup" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.ActionSetup.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'ActionSetup'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.ActionSetup.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.action.AnnotatedChip">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.action.</tt><tt class="descname">AnnotatedChip</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.AnnotatedChip" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.AnnotatedChip.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'AnnotatedChip'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.AnnotatedChip.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.action.Chip">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.action.</tt><tt class="descname">Chip</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.Chip" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.Chip.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'Chip'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.Chip.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.action.Device">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.action.</tt><tt class="descname">Device</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.Device" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.Device.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'Device'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.Device.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.action.GenotypingProgram">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.action.</tt><tt class="descname">GenotypingProgram</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.GenotypingProgram" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.GenotypingProgram.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'GenotypingProgram'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.GenotypingProgram.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.action.HardwareDevice">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.action.</tt><tt class="descname">HardwareDevice</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.HardwareDevice" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.HardwareDevice.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'HardwareDevice'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.HardwareDevice.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.action.OriginalFile">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.action.</tt><tt class="descname">OriginalFile</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.OriginalFile" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.OriginalFile.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'OriginalFile'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.OriginalFile.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.action.Scanner">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.action.</tt><tt class="descname">Scanner</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.Scanner" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.Scanner.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'Scanner'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.Scanner.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.action.SoftwareProgram">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.action.</tt><tt class="descname">SoftwareProgram</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.SoftwareProgram" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.SoftwareProgram.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'SoftwareProgram'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.SoftwareProgram.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.action.Study">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.action.</tt><tt class="descname">Study</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.Study" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.action.Study.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'Study'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.action.Study.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-bl.vl.kb.drivers.omero.actions_on_target"></span><dl class="class">
+<dt id="bl.vl.kb.drivers.omero.actions_on_target.ActionOnAction">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.actions_on_target.</tt><tt class="descname">ActionOnAction</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.actions_on_target.ActionOnAction" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.actions_on_target.ActionOnAction.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'ActionOnAction'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.actions_on_target.ActionOnAction.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.actions_on_target.ActionOnCollection">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.actions_on_target.</tt><tt class="descname">ActionOnCollection</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.actions_on_target.ActionOnCollection" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.actions_on_target.ActionOnCollection.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'ActionOnCollection'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.actions_on_target.ActionOnCollection.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.actions_on_target.ActionOnDataCollectionItem">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.actions_on_target.</tt><tt class="descname">ActionOnDataCollectionItem</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.actions_on_target.ActionOnDataCollectionItem" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.actions_on_target.ActionOnDataCollectionItem.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'ActionOnDataCollectionItem'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.actions_on_target.ActionOnDataCollectionItem.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.actions_on_target.ActionOnDataSample">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.actions_on_target.</tt><tt class="descname">ActionOnDataSample</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.actions_on_target.ActionOnDataSample" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.actions_on_target.ActionOnDataSample.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'ActionOnDataSample'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.actions_on_target.ActionOnDataSample.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.actions_on_target.ActionOnVessel">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.actions_on_target.</tt><tt class="descname">ActionOnVessel</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.actions_on_target.ActionOnVessel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.actions_on_target.ActionOnVessel.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'ActionOnVessel'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.actions_on_target.ActionOnVessel.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-bl.vl.kb.drivers.omero.data_samples"></span><dl class="class">
+<dt id="bl.vl.kb.drivers.omero.data_samples.DataObject">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.data_samples.</tt><tt class="descname">DataObject</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.DataObject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.data_samples.DataObject.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'DataObject'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.DataObject.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.data_samples.DataObject.id">
+<tt class="descname">id</tt><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.DataObject.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.data_samples.DataObject.vid">
+<tt class="descname">vid</tt><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.DataObject.vid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.data_samples.DataSample">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.data_samples.</tt><tt class="descname">DataSample</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.DataSample" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.data_samples.DataSample.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'DataSample'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.DataSample.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.data_samples.DataSampleStatus">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.data_samples.</tt><tt class="descname">DataSampleStatus</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.DataSampleStatus" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.data_samples.DataSampleStatus.CORRUPTED">
+<tt class="descname">CORRUPTED</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.data_samples.DataSampleStatus object at 0x4a73190&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.DataSampleStatus.CORRUPTED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.data_samples.DataSampleStatus.DESTROYED">
+<tt class="descname">DESTROYED</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.data_samples.DataSampleStatus object at 0x4a73090&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.DataSampleStatus.DESTROYED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.data_samples.DataSampleStatus.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'DataSampleStatus'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.DataSampleStatus.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.data_samples.DataSampleStatus.UNKNOWN">
+<tt class="descname">UNKNOWN</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.data_samples.DataSampleStatus object at 0x4a6ce50&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.DataSampleStatus.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.data_samples.DataSampleStatus.USABLE">
+<tt class="descname">USABLE</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.data_samples.DataSampleStatus object at 0x4a73290&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.DataSampleStatus.USABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.data_samples.GenotypeDataSample">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.data_samples.</tt><tt class="descname">GenotypeDataSample</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.GenotypeDataSample" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.data_samples.GenotypeDataSample.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'GenotypeDataSample'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.GenotypeDataSample.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.kb.drivers.omero.data_samples.GenotypeDataSample.resolve_to_data">
+<tt class="descname">resolve_to_data</tt><big>(</big><em>indices=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.GenotypeDataSample.resolve_to_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.data_samples.MicroArrayMeasure">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.data_samples.</tt><tt class="descname">MicroArrayMeasure</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.MicroArrayMeasure" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.data_samples.MicroArrayMeasure.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'MicroArrayMeasure'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.data_samples.MicroArrayMeasure.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-bl.vl.kb.drivers.omero.demographic"></span><dl class="class">
+<dt id="bl.vl.kb.drivers.omero.demographic.Agreement">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.demographic.</tt><tt class="descname">Agreement</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.demographic.Agreement" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.demographic.Agreement.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'Agreement'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.demographic.Agreement.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.demographic.Demographic">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.demographic.</tt><tt class="descname">Demographic</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.demographic.Demographic" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.demographic.Demographic.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'Demographic'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.demographic.Demographic.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.demographic.InformedConsent">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.demographic.</tt><tt class="descname">InformedConsent</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.demographic.InformedConsent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.demographic.InformedConsent.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'InformedConsent'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.demographic.InformedConsent.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-bl.vl.kb.drivers.omero.individual"></span><dl class="class">
+<dt id="bl.vl.kb.drivers.omero.individual.ActionOnIndividual">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.individual.</tt><tt class="descname">ActionOnIndividual</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.individual.ActionOnIndividual" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.individual.ActionOnIndividual.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'ActionOnIndividual'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.individual.ActionOnIndividual.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.individual.Enrollment">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.individual.</tt><tt class="descname">Enrollment</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.individual.Enrollment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.individual.Enrollment.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'Enrollment'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.individual.Enrollment.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.individual.Gender">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.individual.</tt><tt class="descname">Gender</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.individual.Gender" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.individual.Gender.FEMALE">
+<tt class="descname">FEMALE</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.individual.Gender object at 0x4ab9490&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.individual.Gender.FEMALE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.individual.Gender.MALE">
+<tt class="descname">MALE</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.individual.Gender object at 0x4ab9290&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.individual.Gender.MALE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.individual.Gender.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'Gender'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.individual.Gender.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.individual.Individual">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.individual.</tt><tt class="descname">Individual</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.individual.Individual" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.individual.Individual.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'Individual'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.individual.Individual.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-bl.vl.kb.drivers.omero.objects_collections"></span><dl class="class">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.Container">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.objects_collections.</tt><tt class="descname">Container</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.Container" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.Container.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'Container'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.Container.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.ContainerStatus">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.objects_collections.</tt><tt class="descname">ContainerStatus</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.ContainerStatus" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.DISCARDED">
+<tt class="descname">DISCARDED</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.objects_collections.ContainerStatus object at 0x4a73a90&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.DISCARDED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.INPREPARATION">
+<tt class="descname">INPREPARATION</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.objects_collections.ContainerStatus object at 0x4a73890&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.INPREPARATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.INSTOCK">
+<tt class="descname">INSTOCK</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.objects_collections.ContainerStatus object at 0x4a73490&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.INSTOCK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'ContainerStatus'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.READY">
+<tt class="descname">READY</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.objects_collections.ContainerStatus object at 0x4a73990&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.READY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.UNKNOWN">
+<tt class="descname">UNKNOWN</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.objects_collections.ContainerStatus object at 0x4a73790&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.UNUSABLE">
+<tt class="descname">UNUSABLE</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.objects_collections.ContainerStatus object at 0x4a73690&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.UNUSABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.USED">
+<tt class="descname">USED</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.objects_collections.ContainerStatus object at 0x4a73b90&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.ContainerStatus.USED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.DataCollection">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.objects_collections.</tt><tt class="descname">DataCollection</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.DataCollection" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.DataCollection.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'DataCollection'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.DataCollection.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.DataCollectionItem">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.objects_collections.</tt><tt class="descname">DataCollectionItem</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.DataCollectionItem" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.DataCollectionItem.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'DataCollectionItem'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.DataCollectionItem.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.FlowCell">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.objects_collections.</tt><tt class="descname">FlowCell</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.FlowCell" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.FlowCell.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'FlowCell'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.FlowCell.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.Lane">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.objects_collections.</tt><tt class="descname">Lane</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.Lane" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.Lane.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'Lane'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.Lane.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.SlottedContainer">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.objects_collections.</tt><tt class="descname">SlottedContainer</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.SlottedContainer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.SlottedContainer.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'SlottedContainer'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.SlottedContainer.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.TaggedDataCollectionItem">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.objects_collections.</tt><tt class="descname">TaggedDataCollectionItem</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.TaggedDataCollectionItem" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.TaggedDataCollectionItem.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'TaggedDataCollectionItem'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.TaggedDataCollectionItem.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.TiterPlate">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.objects_collections.</tt><tt class="descname">TiterPlate</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.TiterPlate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.TiterPlate.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'TiterPlate'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.TiterPlate.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.VLCollection">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.objects_collections.</tt><tt class="descname">VLCollection</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.VLCollection" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.objects_collections.VLCollection.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'VLCollection'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.objects_collections.VLCollection.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-bl.vl.kb.drivers.omero.vessels"></span><dl class="class">
+<dt id="bl.vl.kb.drivers.omero.vessels.LaneSlot">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.vessels.</tt><tt class="descname">LaneSlot</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.LaneSlot" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.LaneSlot.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'LaneSlot'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.LaneSlot.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.vessels.PlateWell">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.vessels.</tt><tt class="descname">PlateWell</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.PlateWell" title="Permalink to this definition">¶</a></dt>
+<dd><p>FIXME:</p>
+<p><strong>NOTE:</strong> Confusingly enough, everything is base 1.</p>
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.PlateWell.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'PlateWell'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.PlateWell.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.vessels.Tube">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.vessels.</tt><tt class="descname">Tube</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.Tube" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.Tube.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'Tube'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.Tube.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.vessels.Vessel">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.vessels.</tt><tt class="descname">Vessel</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.Vessel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.Vessel.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'Vessel'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.Vessel.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselContent">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.vessels.</tt><tt class="descname">VesselContent</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselContent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselContent.BLOOD">
+<tt class="descname">BLOOD</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.vessels.VesselContent object at 0x4a7a110&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselContent.BLOOD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselContent.DNA">
+<tt class="descname">DNA</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.vessels.VesselContent object at 0x4a7a310&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselContent.DNA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselContent.EMPTY">
+<tt class="descname">EMPTY</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.vessels.VesselContent object at 0x4a6c7d0&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselContent.EMPTY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselContent.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'VesselContent'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselContent.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselContent.RNA">
+<tt class="descname">RNA</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.vessels.VesselContent object at 0x4a7a410&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselContent.RNA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselContent.SERUM">
+<tt class="descname">SERUM</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.vessels.VesselContent object at 0x4a7a210&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselContent.SERUM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselStatus">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.vessels.</tt><tt class="descname">VesselStatus</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselStatus" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselStatus.CONTENTCORRUPTED">
+<tt class="descname">CONTENTCORRUPTED</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.vessels.VesselStatus object at 0x4a7aa90&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselStatus.CONTENTCORRUPTED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselStatus.CONTENTUSABLE">
+<tt class="descname">CONTENTUSABLE</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.vessels.VesselStatus object at 0x4a7a990&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselStatus.CONTENTUSABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselStatus.DISCARDED">
+<tt class="descname">DISCARDED</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.vessels.VesselStatus object at 0x4a7a890&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselStatus.DISCARDED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselStatus.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'VesselStatus'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselStatus.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselStatus.UNKNOWN">
+<tt class="descname">UNKNOWN</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.vessels.VesselStatus object at 0x4a7a690&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselStatus.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselStatus.UNUSABLE">
+<tt class="descname">UNUSABLE</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.vessels.VesselStatus object at 0x4a7a790&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselStatus.UNUSABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselStatus.UNUSED">
+<tt class="descname">UNUSED</tt><em class="property"> = &lt;bl.vl.kb.drivers.omero.vessels.VesselStatus object at 0x4a7a510&gt;</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselStatus.UNUSED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselsCollection">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.vessels.</tt><tt class="descname">VesselsCollection</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselsCollection" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselsCollection.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'VesselsCollection'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselsCollection.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselsCollectionItem">
+<em class="property">class </em><tt class="descclassname">bl.vl.kb.drivers.omero.vessels.</tt><tt class="descname">VesselsCollectionItem</tt><big>(</big><em>ome_obj=None</em>, <em>proxy=None</em><big>)</big><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselsCollectionItem" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.kb.drivers.omero.vessels.VesselsCollectionItem.OME_TABLE">
+<tt class="descname">OME_TABLE</tt><em class="property"> = 'VesselsCollectionItem'</em><a class="headerlink" href="#bl.vl.kb.drivers.omero.vessels.VesselsCollectionItem.OME_TABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-bl.vl.genotype">
+<span id="genotype-module"></span><h2>Genotype module<a class="headerlink" href="#module-bl.vl.genotype" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-bl.vl.genotype.algo"></span><div class="section" id="genotyping-related-algorithms">
+<h3>Genotyping-related algorithms<a class="headerlink" href="#genotyping-related-algorithms" title="Permalink to this headline">¶</a></h3>
+<p>This is a collection of simple algorithms used to analyze genotype
+data provided as an iterable of dictionaries with, at least, the
+following fields:</p>
+<ul class="simple">
+<li>&#8216;probs&#8217;: a 2 by <tt class="docutils literal"><span class="pre">N</span></tt> numpy array where the two rows contain,
+respectively, the probabilities of being homozygous for the first
+(A) and second (B) allele;</li>
+</ul>
+<p>where <tt class="docutils literal"><span class="pre">N</span></tt> is the number of SNPs in the data set.</p>
+<p>Note that most functions in this module operate directly on continuous
+probabilistic representations of genotypes, rather than discrete ones.</p>
+<dl class="function">
+<dt id="bl.vl.genotype.algo.count_homozygotes">
+<tt class="descclassname">bl.vl.genotype.algo.</tt><tt class="descname">count_homozygotes</tt><big>(</big><em>it</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.algo.count_homozygotes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the levels of AA and BB homozigosity.</p>
+<p>In the case of deterministic calls, i.e., (1.0, 0.0) for AA,
+(0.0, 1.0) for BB and (0.0, 0.0) for AB, this falls back to
+conventional homozygote count.</p>
+<p>Returns an array with the same shape as the &#8216;probs&#8217; arrays in the
+input stream, whose rows contain the homozigosity levels for,
+respectively, AA and BB.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.genotype.algo.find_shared_support">
+<tt class="descclassname">bl.vl.genotype.algo.</tt><tt class="descname">find_shared_support</tt><big>(</big><em>kb</em>, <em>gdos</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.algo.find_shared_support" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the set of markers that are shared by a group of GDOs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>kb</strong> (<em>KnowledgeBase</em>) &#8211; the knowledge base</li>
+<li><strong>gdos</strong> (<em>iterator</em>) &#8211; a stream of GDOs</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(marker_ids, index_arrays) tuple. marker_ids is the list of
+shared markers vids, while index_array is a list that contains, for
+each GDO, an np.array that indexes the selected GDO support markers.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.genotype.algo.generate_data">
+<tt class="descclassname">bl.vl.genotype.algo.</tt><tt class="descname">generate_data</tt><big>(</big><em>size</em>, <em>conf_sigma=0.05</em>, <em>conf_to_ratio=1.25</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.algo.generate_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate random genotyping data.</p>
+<p>The distribution of confidence values is half-normal with sigma
+<tt class="docutils literal"><span class="pre">conf_sigma</span></tt>.  The ratio between the highest and the second
+highest probability is proportional to the confidence value with
+coefficient <tt class="docutils literal"><span class="pre">conf_to_ratio</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.genotype.algo.hwe">
+<tt class="descclassname">bl.vl.genotype.algo.</tt><tt class="descname">hwe</tt><big>(</big><em>it</em>, <em>counts=None</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.algo.hwe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement Hardy-Weinberg exact calculation using the method described in
+<a class="reference external" href="http://dx.doi.org/10.1086/429864">Wigginton et al.</a>.</p>
+<p>It returns an array with the probabilities that the distribution of
+alleles seen for each marker is compatible with the Hardy-Weinberg
+Equilibrium (HWE).</p>
+<img src="../_images/mathmpl/math-92fd955fea.png" class="center" /><p>Where <img src="../_images/mathmpl/math-c0ce814b9a.png" style="position: relative; bottom: -8px"/> is an indicator function that is equal to 1 when
+<img src="../_images/mathmpl/math-4e155c67a6.png" style="position: relative; bottom: -3px"/> is true and equal to 0 otherwise.</p>
+<p>That is, we are computing the probability that the real value of the
+HWE will be below the one that would be predicted from <img src="../_images/mathmpl/math-1922d1ceaa.png" style="position: relative; bottom: -3px"/>
+(total number of diploid individuals) and <img src="../_images/mathmpl/math-c5cc6c3967.png" style="position: relative; bottom: -8px"/>, the measured
+count of the allele A.</p>
+<p>The <tt class="docutils literal"><span class="pre">counts</span></tt> parameter is the result of calling count_homozygotes
+on <tt class="docutils literal"><span class="pre">it</span></tt>.</p>
+<p>Returns a mono-dimensional array, of length equal to the number of
+SNPs, that contains the aforementioned probability for each SNP.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.genotype.algo.hwe_probabilites">
+<tt class="descclassname">bl.vl.genotype.algo.</tt><tt class="descname">hwe_probabilites</tt><big>(</big><em>n_a</em>, <em>n_ab</em>, <em>N</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.algo.hwe_probabilites" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.genotype.algo.hwe_scalar">
+<tt class="descclassname">bl.vl.genotype.algo.</tt><tt class="descname">hwe_scalar</tt><big>(</big><em>n_a</em>, <em>n_ab</em>, <em>N</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.algo.hwe_scalar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.genotype.algo.maf">
+<tt class="descclassname">bl.vl.genotype.algo.</tt><tt class="descname">maf</tt><big>(</big><em>it</em>, <em>counts=None</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.algo.maf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute Minor Allele Frequencies.</p>
+<p>The <tt class="docutils literal"><span class="pre">counts</span></tt> parameter is the result of calling count_homozygotes
+on <tt class="docutils literal"><span class="pre">it</span></tt>.</p>
+<p>Returns a mono-dimensional array, of length equal to the number of
+SNPs, that contains the MAF for each SNP.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.genotype.algo.project_to_discrete_genotype">
+<tt class="descclassname">bl.vl.genotype.algo.</tt><tt class="descname">project_to_discrete_genotype</tt><big>(</big><em>probs</em>, <em>threshold=0.2</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.algo.project_to_discrete_genotype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a probabilistic genotype description to the classical
+discrete view. Returns an array of integers, with:</p>
+<div class="highlight-python"><pre>AA    -&gt; 0
+BB    -&gt; 1
+AB    -&gt; 2
+undef -&gt; 3</pre>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">threshold</span></tt> parameter represents the maximum value of the
+ratio between the second highest and the highest probability for a
+marker, beyond which the discrete call is marked as undefined.</p>
+</dd></dl>
+
+</div>
+<span class="target" id="module-bl.vl.genotype.io"></span><div class="section" id="genotyping-related-i-o">
+<h3>Genotyping-related I/O<a class="headerlink" href="#genotyping-related-i-o" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="bl.vl.genotype.io.CompiledDatReader">
+<tt class="descclassname">bl.vl.genotype.io.</tt><tt class="descname">CompiledDatReader</tt><big>(</big><em>datfile</em>, <em>unpack_indices=True</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.CompiledDatReader" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.genotype.io.DatReader">
+<tt class="descclassname">bl.vl.genotype.io.</tt><tt class="descname">DatReader</tt><big>(</big><em>datfile</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.DatReader" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="bl.vl.genotype.io.Error">
+<em class="property">exception </em><tt class="descclassname">bl.vl.genotype.io.</tt><tt class="descname">Error</tt><a class="headerlink" href="#bl.vl.genotype.io.Error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="bl.vl.genotype.io.InvalidRecordError">
+<em class="property">exception </em><tt class="descclassname">bl.vl.genotype.io.</tt><tt class="descname">InvalidRecordError</tt><a class="headerlink" href="#bl.vl.genotype.io.InvalidRecordError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.genotype.io.MapReader">
+<tt class="descclassname">bl.vl.genotype.io.</tt><tt class="descname">MapReader</tt><big>(</big><em>mapfile</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.MapReader" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="bl.vl.genotype.io.MismatchError">
+<em class="property">exception </em><tt class="descclassname">bl.vl.genotype.io.</tt><tt class="descname">MismatchError</tt><a class="headerlink" href="#bl.vl.genotype.io.MismatchError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.genotype.io.PedLineParser">
+<em class="property">class </em><tt class="descclassname">bl.vl.genotype.io.</tt><tt class="descname">PedLineParser</tt><big>(</big><em>dat_types</em>, <em>skip=False</em>, <em>m_only=False</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.PedLineParser" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bl.vl.genotype.io.PedLineParser.HDR_COLS">
+<tt class="descname">HDR_COLS</tt><em class="property"> = 5</em><a class="headerlink" href="#bl.vl.genotype.io.PedLineParser.HDR_COLS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.genotype.io.PedLineParser.parse">
+<tt class="descname">parse</tt><big>(</big><em>ped_line</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.PedLineParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.genotype.io.PedWriter">
+<em class="property">class </em><tt class="descclassname">bl.vl.genotype.io.</tt><tt class="descname">PedWriter</tt><big>(</big><em>vcs</em>, <em>base_path='bl_vl_ped'</em>, <em>resolve_label=False</em>, <em>threshold=0.2</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.PedWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes a <a class="reference external" href="http://pngu.mgh.harvard.edu/~purcell/plink">PLINK</a>
+(ped, map) pair for a given marker set and collection of families.</p>
+<p>It will write a map file with marker positions defined by vcs.  If
+resolve_label is False, default value, it will use as markers label
+&lt;vid&gt;:&lt;idx&gt; (e.g., V0393:8933) that are, respectively, the vid of
+the definiting marker array and the index of the marker within
+it. Otherwise, it will resolve to the label assigned to the marker
+in the defining markers array.</p>
+<p>In case of multiple origin for the same vcs node, the writer will
+only consider the first.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>vcs</strong> &#8211; definition of markers positions used to generate the map file</li>
+<li><strong>base_path</strong> (<em>bool</em>) &#8211; optional base_path that will be used to create the
+.ped and .map files</li>
+<li><strong>resolve_label</strong> &#8211; use MarkersArray markers label</li>
+<li><strong>threshold</strong> &#8211; maximum value of the ratio between the second
+highest and the highest probability for a marker, beyond which
+the discrete call is marked as undefined. Default 0.2 See
+documentation of <cite>bl.vl.genotype.algo.project_to_discrete_genotype()</cite>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="bl.vl.genotype.io.PedWriter.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.PedWriter.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.genotype.io.PedWriter.write_family">
+<tt class="descname">write_family</tt><big>(</big><em>family_label</em>, <em>family_members</em>, <em>data_sample_by_id=None</em>, <em>phenotype_by_id=None</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.PedWriter.write_family" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write out ped file lines corresponding to individuals in a given
+list, together with genotypes and, optionally, phenotypes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>family_label</strong> (<em>str</em>) &#8211; what to write as the family id</li>
+<li><strong>family_members</strong> (<em>iterator on Individual</em>) &#8211; relevant elements of the family</li>
+<li><strong>data_sample_by_id</strong> (<em>dict</em>) &#8211; an optional dict-like object that maps
+individual ids to either a single GenotypeDataSample objects or
+a dictionary of mset.id -&gt; GenotypeDataSample object.</li>
+<li><strong>phenotype_by_id</strong> (<em>dict</em>) &#8211; an optional dict-like object that maps
+individual ids to values that can be put in column 6 (phenotype)
+of a PLINK ped file</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.genotype.io.PedWriter.write_map">
+<tt class="descname">write_map</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.PedWriter.write_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write out the map file.</p>
+<p><strong>NOTE:</strong> we currently do not have a way to estimate the genetic
+distance, so we force it to 0.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bl.vl.genotype.io.VCFWriter">
+<em class="property">class </em><tt class="descclassname">bl.vl.genotype.io.</tt><tt class="descname">VCFWriter</tt><big>(</big><em>mset</em>, <em>ref_genome</em>, <em>marker_selector=None</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.VCFWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes a <a class="reference external" href="http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41">VCF 4.1</a>
+file.</p>
+<p>This is a minimal implementation, but the VCF output should be at
+least readable by <a class="reference external" href="http://genome.sph.umich.edu/wiki/VerifyBamID">VerifyBamID</a>.</p>
+<p>Example</p>
+<p>##fileformat=VCFv4.1
+##fileDate=20090805
+##source=myImputationProgramV3.1
+##reference=file:///seq/references/1000GenomesPilot-NCBI36.fasta
+##FORMAT=&lt;ID=GT,Number=1,Type=String,Description=&#8221;Genotype&#8221;&gt;
+#CHROM POS     ID        REF    ALT     QUAL FILTER FORMAT NA01 NA02 NA03
+20     14370   rs6054257 G      A       .    PASS   GT     0/0  1/0  1/1
+20     17330   .         T      A       .    PASS   GT     0/0  0/1  0/0
+20     1110696 rs6040355 A      G       .    PASS   GT     1/2  2/1  2/2</p>
+<p>The REF column corresponds to the allele found on the reference for
+that SNP, while ALT is the alternative allele. The last three
+columns in this example are what has been measured for,
+respectively, samples NA01, NA02, NA03.</p>
+<dl class="method">
+<dt id="bl.vl.genotype.io.VCFWriter.write">
+<tt class="descname">write</tt><big>(</big><em>file_object</em>, <em>data_samples</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.VCFWriter.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.genotype.io.get_dat_data">
+<tt class="descclassname">bl.vl.genotype.io.</tt><tt class="descname">get_dat_data</tt><big>(</big><em>datfile</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.get_dat_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.genotype.io.get_dat_types">
+<tt class="descclassname">bl.vl.genotype.io.</tt><tt class="descname">get_dat_types</tt><big>(</big><em>datfile</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.get_dat_types" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.genotype.io.get_map_data">
+<tt class="descclassname">bl.vl.genotype.io.</tt><tt class="descname">get_map_data</tt><big>(</big><em>mapfile</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.get_map_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.genotype.io.read_ssc">
+<tt class="descclassname">bl.vl.genotype.io.</tt><tt class="descname">read_ssc</tt><big>(</big><em>fn</em>, <em>mset</em>, <em>markers=None</em>, <em>logger=None</em><big>)</big><a class="headerlink" href="#bl.vl.genotype.io.read_ssc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a file with mimetypes.SSC_FILE mimetype and return the prob and
+conf arrays for a given marker array mset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fn</strong> (<em>str</em>) &#8211; ssc file name</li>
+<li><strong>mset</strong> (<em>SNPMarkersSet</em>) &#8211; a reference markers set</li>
+<li><strong>markers</strong> (<em>a numpy record array obtained with a call to
+mset.proxy.genomics.get_markers_array_rows(mset)</em>) &#8211; preloaded markers informations</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-bl.vl.individual">
+<span id="individual-module"></span><h2>Individual module<a class="headerlink" href="#module-bl.vl.individual" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bl.vl.individual.IndividualStub">
+<em class="property">class </em><tt class="descclassname">bl.vl.individual.</tt><tt class="descname">IndividualStub</tt><big>(</big><em>label</em>, <em>gender</em>, <em>father</em>, <em>mother</em><big>)</big><a class="headerlink" href="#bl.vl.individual.IndividualStub" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class that quacks as expected by import_pedigree.</p>
+<dl class="method">
+<dt id="bl.vl.individual.IndividualStub.is_female">
+<tt class="descname">is_female</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.individual.IndividualStub.is_female" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bl.vl.individual.IndividualStub.is_male">
+<tt class="descname">is_male</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.individual.IndividualStub.is_male" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-bl.vl.individual.pedigree"></span><div class="section" id="pedigree-manipulation-functions">
+<h3>Pedigree manipulation functions<a class="headerlink" href="#pedigree-manipulation-functions" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="bl.vl.individual.pedigree.analyze">
+<tt class="descclassname">bl.vl.individual.pedigree.</tt><tt class="descname">analyze</tt><big>(</big><em>family</em><big>)</big><a class="headerlink" href="#bl.vl.individual.pedigree.analyze" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.individual.pedigree.compute_bit_complexity">
+<tt class="descclassname">bl.vl.individual.pedigree.</tt><tt class="descname">compute_bit_complexity</tt><big>(</big><em>family</em>, <em>genotyped</em><big>)</big><a class="headerlink" href="#bl.vl.individual.pedigree.compute_bit_complexity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.individual.pedigree.down_propagate_front">
+<tt class="descclassname">bl.vl.individual.pedigree.</tt><tt class="descname">down_propagate_front</tt><big>(</big><em>family</em>, <em>children</em><big>)</big><a class="headerlink" href="#bl.vl.individual.pedigree.down_propagate_front" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.individual.pedigree.grow_family">
+<tt class="descclassname">bl.vl.individual.pedigree.</tt><tt class="descname">grow_family</tt><big>(</big><em>seeds</em>, <em>children</em>, <em>genotyped</em>, <em>max_complexity=19</em><big>)</big><a class="headerlink" href="#bl.vl.individual.pedigree.grow_family" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.individual.pedigree.import_pedigree">
+<tt class="descclassname">bl.vl.individual.pedigree.</tt><tt class="descname">import_pedigree</tt><big>(</big><em>recorder</em>, <em>istream</em><big>)</big><a class="headerlink" href="#bl.vl.individual.pedigree.import_pedigree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.individual.pedigree.propagate_family">
+<tt class="descclassname">bl.vl.individual.pedigree.</tt><tt class="descname">propagate_family</tt><big>(</big><em>family</em>, <em>children</em><big>)</big><a class="headerlink" href="#bl.vl.individual.pedigree.propagate_family" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.individual.pedigree.propagate_family_helper">
+<tt class="descclassname">bl.vl.individual.pedigree.</tt><tt class="descname">propagate_family_helper</tt><big>(</big><em>family</em>, <em>children</em><big>)</big><a class="headerlink" href="#bl.vl.individual.pedigree.propagate_family_helper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.individual.pedigree.split_disjoint">
+<tt class="descclassname">bl.vl.individual.pedigree.</tt><tt class="descname">split_disjoint</tt><big>(</big><em>family</em>, <em>children</em><big>)</big><a class="headerlink" href="#bl.vl.individual.pedigree.split_disjoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.individual.pedigree.split_family">
+<tt class="descclassname">bl.vl.individual.pedigree.</tt><tt class="descname">split_family</tt><big>(</big><em>family</em>, <em>genotyped</em>, <em>max_complexity=19</em><big>)</big><a class="headerlink" href="#bl.vl.individual.pedigree.split_family" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.individual.pedigree.up_propagate_front">
+<tt class="descclassname">bl.vl.individual.pedigree.</tt><tt class="descname">up_propagate_front</tt><big>(</big><em>family</em>, <em>children</em><big>)</big><a class="headerlink" href="#bl.vl.individual.pedigree.up_propagate_front" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-bl.vl.utils">
+<span id="utils-module"></span><h2>Utils module<a class="headerlink" href="#module-bl.vl.utils" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="generic-utilities">
+<h3>Generic Utilities<a class="headerlink" href="#generic-utilities" title="Permalink to this headline">¶</a></h3>
+<p>Generic utilities used by other modules.</p>
+<dl class="function">
+<dt id="bl.vl.utils.compute_sha1">
+<tt class="descclassname">bl.vl.utils.</tt><tt class="descname">compute_sha1</tt><big>(</big><em>fname</em>, <em>bufsize=16777216</em><big>)</big><a class="headerlink" href="#bl.vl.utils.compute_sha1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.utils.decode_dict">
+<tt class="descclassname">bl.vl.utils.</tt><tt class="descname">decode_dict</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#bl.vl.utils.decode_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.utils.decode_list">
+<tt class="descclassname">bl.vl.utils.</tt><tt class="descname">decode_list</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#bl.vl.utils.decode_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.utils.get_logger">
+<tt class="descclassname">bl.vl.utils.</tt><tt class="descname">get_logger</tt><big>(</big><em>name</em>, <em>level='WARNING'</em>, <em>filename=None</em>, <em>mode='a'</em><big>)</big><a class="headerlink" href="#bl.vl.utils.get_logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.utils.make_vid">
+<tt class="descclassname">bl.vl.utils.</tt><tt class="descname">make_vid</tt><big>(</big><em>prefix='V'</em>, <em>digit='0'</em><big>)</big><a class="headerlink" href="#bl.vl.utils.make_vid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<span class="target" id="module-bl.vl.utils.ome_utils"></span><dl class="function">
+<dt id="bl.vl.utils.ome_utils.make_unique_key">
+<tt class="descclassname">bl.vl.utils.ome_utils.</tt><tt class="descname">make_unique_key</tt><big>(</big><em>*fields</em><big>)</big><a class="headerlink" href="#bl.vl.utils.ome_utils.make_unique_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.utils.ome_utils.ome_hash">
+<tt class="descclassname">bl.vl.utils.ome_utils.</tt><tt class="descname">ome_hash</tt><big>(</big><em>ome_obj</em><big>)</big><a class="headerlink" href="#bl.vl.utils.ome_utils.ome_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.utils.ome_utils.ome_host">
+<tt class="descclassname">bl.vl.utils.ome_utils.</tt><tt class="descname">ome_host</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.utils.ome_utils.ome_host" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.utils.ome_utils.ome_passwd">
+<tt class="descclassname">bl.vl.utils.ome_utils.</tt><tt class="descname">ome_passwd</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.utils.ome_utils.ome_passwd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.utils.ome_utils.ome_user">
+<tt class="descclassname">bl.vl.utils.ome_utils.</tt><tt class="descname">ome_user</tt><big>(</big><big>)</big><a class="headerlink" href="#bl.vl.utils.ome_utils.ome_user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.utils.ome_utils.rtime2time">
+<tt class="descclassname">bl.vl.utils.ome_utils.</tt><tt class="descname">rtime2time</tt><big>(</big><em>t</em><big>)</big><a class="headerlink" href="#bl.vl.utils.ome_utils.rtime2time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.utils.ome_utils.time2rtime">
+<tt class="descclassname">bl.vl.utils.ome_utils.</tt><tt class="descname">time2rtime</tt><big>(</big><em>t</em><big>)</big><a class="headerlink" href="#bl.vl.utils.ome_utils.time2rtime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-bl.vl.utils.snp"></span><dl class="function">
+<dt id="bl.vl.utils.snp.approx_equal_masks">
+<tt class="descclassname">bl.vl.utils.snp.</tt><tt class="descname">approx_equal_masks</tt><big>(</big><em>a_mask</em>, <em>b_mask</em>, <em>width=10</em><big>)</big><a class="headerlink" href="#bl.vl.utils.snp.approx_equal_masks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.utils.snp.convert_to_top">
+<tt class="descclassname">bl.vl.utils.snp.</tt><tt class="descname">convert_to_top</tt><big>(</big><em>mask</em>, <em>toupper=True</em><big>)</big><a class="headerlink" href="#bl.vl.utils.snp.convert_to_top" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a mask with format LeftFlank[AlleleA/AlleleB]RightFlank to
+a new mask obtained by mapping mask to the TOP (following Illumina
+conventions) strand.</p>
+<p>The mask parameter can be a string (e.g., &#8216;AC[A/G]GT&#8217;) or a list in
+the format output by split_mask (e.g., [&#8216;AC&#8217;, [&#8216;A&#8217;, &#8216;G&#8217;], &#8216;GT&#8217;]);
+the returned mask has the same type as the input one.</p>
+<p>See the following reference for algorithm description:</p>
+<p>Illumina, Inc., &#8220;TOP/BOT&#8221; Strand and &#8220;A/B&#8221; Allele, technical note, 2006.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.utils.snp.join_mask">
+<tt class="descclassname">bl.vl.utils.snp.</tt><tt class="descname">join_mask</tt><big>(</big><em>mask</em><big>)</big><a class="headerlink" href="#bl.vl.utils.snp.join_mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.utils.snp.rc_mask">
+<tt class="descclassname">bl.vl.utils.snp.</tt><tt class="descname">rc_mask</tt><big>(</big><em>mask</em><big>)</big><a class="headerlink" href="#bl.vl.utils.snp.rc_mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="bl.vl.utils.snp.split_mask">
+<tt class="descclassname">bl.vl.utils.snp.</tt><tt class="descname">split_mask</tt><big>(</big><em>mask</em><big>)</big><a class="headerlink" href="#bl.vl.utils.snp.split_mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modelling.html" title="Create custom models for OMERO.biobank"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="omero.html" title="Biobank and OMERO"
+             >previous</a> |</li>
+        <li><a href="../index.html">Biobank 0.6.0_dev documentation</a> &raquo;</li>
+          <li><a href="index.html" >Developer&#8217;s manual</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, CRS4.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
